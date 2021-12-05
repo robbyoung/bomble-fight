@@ -1,20 +1,8 @@
-import {Action} from 'redux';
-import {State} from '../state';
+import {combineReducers} from 'redux';
+import game from './game';
+import players from './players';
+import combatants from './combatants';
+import round from './round';
 
-const defaultState: State = {
-  game: {roundNumber: 0},
-  combatants: [],
-  players: [],
-  currentRound: {
-    bets: [],
-    combatantIds: [],
-    seed: '',
-  },
-};
-
-export default function rootReducer(
-  state: State = defaultState,
-  _action: Action,
-): State {
-  return state;
-}
+const rootReducer = combineReducers({game, round, players, combatants});
+export default rootReducer;

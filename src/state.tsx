@@ -23,7 +23,6 @@ export interface Bet {
 export interface Round {
   combatantIds: string[];
   bets: Bet[];
-  seed: string;
 }
 
 export interface State {
