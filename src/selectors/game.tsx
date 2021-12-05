@@ -1,9 +1,9 @@
 import {createSelector} from 'reselect';
 import {State} from '../state';
 
-export const selectGame = (state: State) => state.game;
+const selectGame = (state: State) => state.game;
 
-export const getRoundNumber = createSelector(
+export const selectRoundNumber = createSelector(
   selectGame,
   (game) => game.roundNumber,
 );

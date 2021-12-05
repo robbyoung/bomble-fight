@@ -3,12 +3,10 @@ import {ActionType} from './actionType';
 
 export interface StartGameAction extends Action {
   type: ActionType.START_GAME;
-  numPlayers: number;
 }
 
-export function startGameAction(numPlayers: number): StartGameAction {
+export function startGameAction(): StartGameAction {
   return {
     type: ActionType.START_GAME,
-    numPlayers,
   };
 }
