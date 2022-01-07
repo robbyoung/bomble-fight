@@ -1,7 +1,9 @@
 import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {addPlayerAction} from './actions/addPlayer';
+import {getCombatantsAction} from './actions/getCombatants';
 import {startGameAction} from './actions/startGame';
+import {selectCombatantNames} from './selectors/combatants';
 import {selectRoundNumber} from './selectors/game';
 import {selectPlayerCount, selectPlayerNames} from './selectors/players';
 
@@ -11,6 +13,8 @@ function App() {
   const roundNumber = useSelector(selectRoundNumber);
   const playerNames = useSelector(selectPlayerNames);
   const playerCount = useSelector(selectPlayerCount);
+
+  const combatantNames = useSelector(selectCombatantNames);
 
   return (
     <div>
@@ -39,6 +43,15 @@ function App() {
           </div>
         </>
       )}
+      <div>
+        <h3>Combatants</h3>
+        {combatantNames.map((name) => (
+          <p key={name}>{name}</p>
+        ))}
+        <button onClick={() => dispatch(getCombatantsAction())}>
+          REFRESH COMBATANTS
+        </button>
+      </div>
     </div>
   );
 }
