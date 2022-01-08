@@ -7,3 +7,9 @@ export interface GetCombatantsResponse {
   }[];
   count: number;
 }
+
+export interface PostPlayerResponse {
+  Id: string;
+  Name: string;
+  Money: number;
+}
