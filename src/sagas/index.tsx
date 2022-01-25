@@ -1,6 +1,11 @@
 import {put, takeEvery, takeLatest} from 'redux-saga/effects';
 import {ActionType} from '../actions/actionType';
 import {
+  AddBetAction,
+  addBetFailureAction,
+  addBetSuccessAction,
+} from '../actions/addBet';
+import {
   AddPlayerAction,
   addPlayerFailureAction,
   addPlayerSuccessAction,
@@ -16,6 +21,7 @@ import {
 import {
   GetCombatantsResponse,
   GetPlayersResponse,
+  PostBetResponse,
   PostPlayerResponse,
 } from './api';
 
@@ -55,10 +61,23 @@ function* postPlayer(action: AddPlayerAction) {
   }
 }
 
+function* postBet(action: AddBetAction) {
+  try {
+    const json: PostBetResponse = yield fetch(`${baseUrl}/bet`, {
+      method: 'POST',
+      body: JSON.stringify(action.bet),
+    }).then((response) => response.json());
+    yield put(addBetSuccessAction(json));
+  } catch {
+    yield put(addBetFailureAction());
+  }
+}
+
 function* saga() {
   yield takeLatest(ActionType.GET_COMBATANTS_REQUEST, getCombatants);
   yield takeLatest(ActionType.GET_PLAYERS_REQUEST, getPlayers);
   yield takeEvery(ActionType.ADD_PLAYER_REQUEST, postPlayer);
+  yield takeEvery(ActionType.ADD_BET_REQUEST, postBet);
 }
 
 export default saga;

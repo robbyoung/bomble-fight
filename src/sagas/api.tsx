@@ -22,3 +22,14 @@ export interface PostPlayerResponse {
   Name: string;
   Money: number;
 }
+
+export interface PostBetResponse {
+  PlayerId: string;
+  CombatantId: string;
+  Amount: number;
+}
+
+export interface ErrorResponse {
+  status: number;
+  message: string;
+}

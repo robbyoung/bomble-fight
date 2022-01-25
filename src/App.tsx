@@ -1,12 +1,18 @@
 import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {addBetAction} from './actions/addBet';
 import {addPlayerAction} from './actions/addPlayer';
 import {getCombatantsAction} from './actions/getCombatants';
 import {getPlayersAction} from './actions/getPlayers';
 import {startGameAction} from './actions/startGame';
-import {selectCombatantNames} from './selectors/combatants';
+import {selectBetsByPlayer} from './selectors/bets';
+import {selectCombatantNames, selectCombatants} from './selectors/combatants';
 import {selectRoundNumber} from './selectors/game';
-import {selectPlayerCount, selectPlayerNames} from './selectors/players';
+import {
+  selectPlayerCount,
+  selectPlayerNames,
+  selectPlayers,
+} from './selectors/players';
 
 function App() {
   const dispatch = useDispatch();
@@ -14,7 +20,9 @@ function App() {
   const roundNumber = useSelector(selectRoundNumber);
   const playerNames = useSelector(selectPlayerNames);
   const playerCount = useSelector(selectPlayerCount);
-
+  const bets = useSelector(selectBetsByPlayer);
+  const players = useSelector(selectPlayers);
+  const combatants = useSelector(selectCombatants);
   const combatantNames = useSelector(selectCombatantNames);
 
   return (
@@ -54,6 +62,20 @@ function App() {
         ))}
         <button onClick={() => dispatch(getCombatantsAction())}>
           REFRESH COMBATANTS
+        </button>
+      </div>
+      <div>
+        <h3>Bets</h3>
+        {bets.map((b) => (
+          <p key={b.playerName}>
+            {b.playerName}: {b.combatantName}
+          </p>
+        ))}
+        <button
+          onClick={() =>
+            dispatch(addBetAction(players[0].id, combatants[0].id, 100))
+          }>
+          BET
         </button>
       </div>
     </div>

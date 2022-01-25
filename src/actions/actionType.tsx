@@ -12,4 +12,8 @@ export enum ActionType {
   GET_COMBATANTS_REQUEST = 'Get Combatants Request',
   GET_COMBATANTS_SUCCESS = 'Get Combatants Success',
   GET_COMBATANTS_FAILURE = 'Get Combatants Failure',
+
+  ADD_BET_REQUEST = 'Add Bet Request',
+  ADD_BET_SUCCESS = 'Add Bet Success',
+  ADD_BET_FAILURE = 'Add Bet Failure',
 }

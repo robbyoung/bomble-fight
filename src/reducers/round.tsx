@@ -2,7 +2,6 @@ import {Round} from '../state';
 import {Action} from 'redux';
 
 const defaultState: Round = {
-  bets: [],
   combatantIds: [],
 };
 
