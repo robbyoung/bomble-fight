@@ -8,6 +8,15 @@ export interface GetCombatantsResponse {
   count: number;
 }
 
+export interface GetPlayersResponse {
+  players: {
+    Id: string;
+    Name: string;
+    Money: number;
+  }[];
+  count: number;
+}
+
 export interface PostPlayerResponse {
   Id: string;
   Name: string;

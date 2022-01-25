@@ -9,7 +9,15 @@ import {
   getCombatantsFailureAction,
   getCombatantsSuccessAction,
 } from '../actions/getCombatants';
-import {GetCombatantsResponse, PostPlayerResponse} from './api';
+import {
+  getPlayersFailureAction,
+  getPlayersSuccessAction,
+} from '../actions/getPlayers';
+import {
+  GetCombatantsResponse,
+  GetPlayersResponse,
+  PostPlayerResponse,
+} from './api';
 
 const baseUrl = 'http://localhost:3001';
 
@@ -21,6 +29,17 @@ function* getCombatants() {
     yield put(getCombatantsSuccessAction(json));
   } catch {
     yield put(getCombatantsFailureAction());
+  }
+}
+
+function* getPlayers() {
+  try {
+    const json: GetPlayersResponse = yield fetch(`${baseUrl}/players`).then(
+      (response) => response.json(),
+    );
+    yield put(getPlayersSuccessAction(json));
+  } catch {
+    yield put(getPlayersFailureAction());
   }
 }
 
@@ -38,6 +57,7 @@ function* postPlayer(action: AddPlayerAction) {
 
 function* saga() {
   yield takeLatest(ActionType.GET_COMBATANTS_REQUEST, getCombatants);
+  yield takeLatest(ActionType.GET_PLAYERS_REQUEST, getPlayers);
   yield takeEvery(ActionType.ADD_PLAYER_REQUEST, postPlayer);
 }
 

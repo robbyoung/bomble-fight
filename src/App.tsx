@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {addPlayerAction} from './actions/addPlayer';
 import {getCombatantsAction} from './actions/getCombatants';
+import {getPlayersAction} from './actions/getPlayers';
 import {startGameAction} from './actions/startGame';
 import {selectCombatantNames} from './selectors/combatants';
 import {selectRoundNumber} from './selectors/game';
@@ -41,6 +42,9 @@ function App() {
               START ({playerCount} PLAYERS)
             </button>
           </div>
+          <button onClick={() => dispatch(getPlayersAction())}>
+            REFRESH PLAYERS
+          </button>
         </>
       )}
       <div>
