@@ -1,3 +1,5 @@
+import {FightStatus} from '../state';
+
 export interface GetCombatantsResponse {
   combatants: {
     Id: string;
@@ -27,6 +29,16 @@ export interface PostBetResponse {
   PlayerId: string;
   CombatantId: string;
   Amount: number;
+}
+
+export interface PostFightResponse {
+  AttackerId: string;
+  DefenderId: string;
+  AttackerHealth: number;
+  DefenderHealth: number;
+  AttackerDamage: number;
+  DefenderDamage: number;
+  FightStatus: FightStatus;
 }
 
 export interface ErrorResponse {

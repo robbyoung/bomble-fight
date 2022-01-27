@@ -4,9 +4,11 @@ import {addBetAction} from './actions/addBet';
 import {addPlayerAction} from './actions/addPlayer';
 import {getCombatantsAction} from './actions/getCombatants';
 import {getPlayersAction} from './actions/getPlayers';
+import {progressFightAction} from './actions/progressFight';
 import {startGameAction} from './actions/startGame';
 import {selectBetsByPlayer} from './selectors/bets';
 import {selectCombatantNames, selectCombatants} from './selectors/combatants';
+import {selectFightStatus} from './selectors/fight';
 import {selectRoundNumber} from './selectors/game';
 import {
   selectPlayerCount,
@@ -24,6 +26,7 @@ function App() {
   const players = useSelector(selectPlayers);
   const combatants = useSelector(selectCombatants);
   const combatantNames = useSelector(selectCombatantNames);
+  const fightStatus = useSelector(selectFightStatus);
 
   return (
     <div>
@@ -76,6 +79,13 @@ function App() {
             dispatch(addBetAction(players[0].id, combatants[0].id, 100))
           }>
           BET
+        </button>
+      </div>
+      <div>
+        <h3>Fight</h3>
+        <p>Fight status: {fightStatus}</p>
+        <button onClick={() => dispatch(progressFightAction())}>
+          PROGRESS
         </button>
       </div>
     </div>

@@ -16,4 +16,8 @@ export enum ActionType {
   ADD_BET_REQUEST = 'Add Bet Request',
   ADD_BET_SUCCESS = 'Add Bet Success',
   ADD_BET_FAILURE = 'Add Bet Failure',
+
+  PROGRESS_FIGHT_REQUEST = 'Progress Fight Request',
+  PROGRESS_FIGHT_SUCCESS = 'Progress Fight Success',
+  PROGRESS_FIGHT_FAILURE = 'Progress Fight Failure',
 }

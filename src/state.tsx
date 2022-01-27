@@ -20,8 +20,21 @@ export interface Bet {
   amount: number;
 }
 
-export interface Round {
-  combatantIds: string[];
+export enum FightStatus {
+  Pending,
+  Starting,
+  Active,
+  Finished,
+}
+
+export interface Fight {
+  attackerId: string;
+  defenderId: string;
+  attackerHealth: number;
+  defenderHealth: number;
+  attackerDamage: number;
+  defenderDamage: number;
+  status: FightStatus;
 }
 
 export interface State {
@@ -29,5 +42,5 @@ export interface State {
   players: Player[];
   combatants: Combatant[];
   bets: Bet[];
-  currentRound: Round;
+  fight: Fight;
 }

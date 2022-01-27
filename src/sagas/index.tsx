@@ -19,9 +19,15 @@ import {
   getPlayersSuccessAction,
 } from '../actions/getPlayers';
 import {
+  ProgressFightAction,
+  progressFightFailureAction,
+  progressFightSuccessAction,
+} from '../actions/progressFight';
+import {
   GetCombatantsResponse,
   GetPlayersResponse,
   PostBetResponse,
+  PostFightResponse,
   PostPlayerResponse,
 } from './api';
 
@@ -73,11 +79,23 @@ function* postBet(action: AddBetAction) {
   }
 }
 
+function* postFight(_action: ProgressFightAction) {
+  try {
+    const json: PostFightResponse = yield fetch(`${baseUrl}/fight`, {
+      method: 'POST',
+    }).then((response) => response.json());
+    yield put(progressFightSuccessAction(json));
+  } catch {
+    yield put(progressFightFailureAction());
+  }
+}
+
 function* saga() {
   yield takeLatest(ActionType.GET_COMBATANTS_REQUEST, getCombatants);
   yield takeLatest(ActionType.GET_PLAYERS_REQUEST, getPlayers);
   yield takeEvery(ActionType.ADD_PLAYER_REQUEST, postPlayer);
   yield takeEvery(ActionType.ADD_BET_REQUEST, postBet);
+  yield takeEvery(ActionType.PROGRESS_FIGHT_REQUEST, postFight);
 }
 
 export default saga;
