@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import {State} from '../state';
 
-const selectPlayers = (state: State) => state.players;
+export const selectPlayers = (state: State) => state.players;
 
 export const selectPlayerCount = createSelector(
   selectPlayers,
