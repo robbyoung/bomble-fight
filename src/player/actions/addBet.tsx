@@ -1,7 +1,7 @@
 import {Action} from 'redux';
-import {Bet} from '../state';
+import {Bet} from '../../models';
 import {ActionType} from './actionType';
-import {PostBetResponse} from '../sagas/api';
+import {PostBetResponse} from '../../api';
 
 export interface AddBetAction extends Action {
   type: ActionType.ADD_BET_REQUEST;
@@ -47,11 +47,11 @@ export function addBetFailureAction(): AddBetFailureAction {
   };
 }
 
-export function addBet(state: Bet[], action: AddBetSuccessAction): Bet[] {
-  console.log('Add bet?');
+export function addBet(_state: Bet, action: AddBetSuccessAction): Bet {
   const bet = action.response;
-  return [
-    ...state,
-    {playerId: bet.PlayerId, combatantId: bet.CombatantId, amount: bet.Amount},
-  ];
+  return {
+    playerId: bet.PlayerId,
+    combatantId: bet.CombatantId,
+    amount: bet.Amount,
+  };
 }

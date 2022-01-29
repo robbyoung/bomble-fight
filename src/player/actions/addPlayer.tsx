@@ -1,6 +1,6 @@
 import {Action} from 'redux';
-import {PostPlayerResponse} from '../sagas/api';
-import {Player} from '../state';
+import {PostPlayerResponse} from '../../api';
+import {Player} from '../../models';
 import {ActionType} from './actionType';
 import {v4} from 'uuid';
 

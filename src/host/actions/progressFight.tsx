@@ -1,6 +1,6 @@
 import {Action} from 'redux';
-import {PostFightResponse} from '../sagas/api';
-import {Fight} from '../state';
+import {PostFightResponse} from '../../api';
+import {Fight} from '../../models';
 import {ActionType} from './actionType';
 
 export interface ProgressFightAction extends Action {

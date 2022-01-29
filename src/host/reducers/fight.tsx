@@ -1,4 +1,4 @@
-import {Fight, FightStatus} from '../state';
+import {Fight, FightStatus} from '../../models';
 import {Action} from 'redux';
 import {ActionType} from '../actions/actionType';
 import {

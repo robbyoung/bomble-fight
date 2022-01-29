@@ -1,6 +1,6 @@
 import {Action} from 'redux';
-import {GetPlayersResponse} from '../sagas/api';
-import {Player} from '../state';
+import {GetPlayersResponse} from '../../api';
+import {Player} from '../../models';
 import {ActionType} from './actionType';
 
 export interface GetPlayersAction extends Action {

@@ -1,5 +1,5 @@
 import createSagaMiddleware from 'redux-saga';
-import App from './App';
+import App from '../App';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import rootReducer from './reducers';
@@ -9,7 +9,7 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(saga);
 
-function Player() {
+function Host() {
   return (
     <Provider store={store}>
       <App />
@@ -17,4 +17,4 @@ function Player() {
   );
 }
 
-export default Player;
+export default Host;

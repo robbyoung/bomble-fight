@@ -1,4 +1,4 @@
-import {FightStatus} from '../state';
+import {FightStatus} from './models';
 
 export interface GetCombatantsResponse {
   combatants: {

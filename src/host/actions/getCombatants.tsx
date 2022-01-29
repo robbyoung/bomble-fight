@@ -1,7 +1,7 @@
 import {Action} from 'redux';
-import {GetCombatantsResponse} from '../sagas/api';
+import {GetCombatantsResponse} from '../../api';
 import {ActionType} from './actionType';
-import {Combatant} from '../state';
+import {Combatant} from '../../models';
 
 export interface GetCombatantsRequestAction extends Action {
   type: ActionType.GET_COMBATANTS_REQUEST;

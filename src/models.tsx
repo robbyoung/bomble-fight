@@ -36,11 +36,3 @@ export interface Fight {
   defenderDamage: number;
   status: FightStatus;
 }
-
-export interface State {
-  game: Game;
-  players: Player[];
-  combatants: Combatant[];
-  bets: Bet[];
-  fight: Fight;
-}
