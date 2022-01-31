@@ -15,6 +15,8 @@ export default function combatants(
   switch (action.type) {
     case ActionType.GET_COMBATANTS_SUCCESS:
       return getCombatants(action as GetCombatantsSuccessAction);
+    case ActionType.RESET_FIGHT_SUCCESS:
+      return [];
     default:
       return state;
   }
