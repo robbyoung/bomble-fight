@@ -45,9 +45,9 @@ export function addPlayerFailureAction(): AddPlayerFailureAction {
 }
 
 export function addPlayer(
-  state: Player[],
+  state: Player,
   action: AddPlayerSuccessAction,
-): Player[] {
+): Player {
   const player = action.response;
-  return [...state, {id: player.Id, name: player.Name, money: player.Money}];
+  return {id: player.Id, name: player.Name, money: player.Money};
 }

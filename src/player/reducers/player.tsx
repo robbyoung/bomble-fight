@@ -3,12 +3,16 @@ import {Action} from 'redux';
 import {ActionType} from '../actions/actionType';
 import {addPlayer, AddPlayerSuccessAction} from '../actions/addPlayer';
 
-const defaultState: Player[] = [];
+const defaultState: Player = {
+  money: 0,
+  name: '',
+  id: '',
+};
 
-export default function players(
-  state: Player[] = defaultState,
+export default function player(
+  state: Player = defaultState,
   action: Action,
-): Player[] {
+): Player {
   switch (action.type) {
     case ActionType.ADD_PLAYER_SUCCESS:
       return addPlayer(state, action as AddPlayerSuccessAction);
