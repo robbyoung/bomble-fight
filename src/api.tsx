@@ -41,6 +41,20 @@ export interface PostFightResponse {
   FightStatus: FightStatus;
 }
 
+export interface GetPlayerStateResponse {
+  Player: {
+    Id: string;
+    Name: string;
+    Money: number;
+  };
+  Bet: {
+    PlayerId: string;
+    CombatantId: string;
+    Amount: number;
+  };
+  FightStatus: FightStatus;
+}
+
 export interface ErrorResponse {
   status: number;
   message: string;
