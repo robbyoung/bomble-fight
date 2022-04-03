@@ -1,4 +1,12 @@
-import {put, takeEvery, takeLatest} from 'redux-saga/effects';
+import {
+  call,
+  delay,
+  put,
+  race,
+  take,
+  takeEvery,
+  takeLatest,
+} from 'redux-saga/effects';
 import {ActionType} from '../actions/actionType';
 import {
   getCombatantsFailureAction,
@@ -36,14 +44,17 @@ function* getCombatants() {
   }
 }
 
-function* getPlayers() {
-  try {
-    const json: GetPlayersResponse = yield fetch(`${baseUrl}/players`).then(
-      (response) => response.json(),
-    );
-    yield put(getPlayersSuccessAction(json));
-  } catch {
-    yield put(getPlayersFailureAction());
+function* pollPlayers() {
+  while (true) {
+    try {
+      const json: GetPlayersResponse = yield fetch(`${baseUrl}/players`).then(
+        (response) => response.json(),
+      );
+      yield put(getPlayersSuccessAction(json));
+      yield delay(2000);
+    } catch {
+      yield put(getPlayersFailureAction());
+    }
   }
 }
 
@@ -69,9 +80,16 @@ function* resetFight(_action: ProgressFightAction) {
   }
 }
 
+function* playersPollWatcher() {
+  while (true) {
+    yield take(ActionType.START_PLAYERS_POLL);
+    yield race([call(pollPlayers), take(ActionType.STOP_PLAYERS_POLL)]);
+  }
+}
+
 function* saga() {
+  yield playersPollWatcher();
   yield takeLatest(ActionType.GET_COMBATANTS_REQUEST, getCombatants);
-  yield takeLatest(ActionType.GET_PLAYERS_REQUEST, getPlayers);
   yield takeEvery(ActionType.PROGRESS_FIGHT_REQUEST, postFight);
   yield takeEvery(ActionType.RESET_FIGHT_REQUEST, resetFight);
 }

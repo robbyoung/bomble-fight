@@ -3,13 +3,15 @@ import {GetPlayersResponse} from '../../api';
 import {Player} from '../../models';
 import {ActionType} from './actionType';
 
-export interface GetPlayersAction extends Action {
-  type: ActionType.GET_PLAYERS_REQUEST;
+export function startPlayersPollAction(): Action {
+  return {
+    type: ActionType.START_PLAYERS_POLL,
+  };
 }
 
-export function getPlayersAction(): GetPlayersAction {
+export function stopPlayersPollAction(): Action {
   return {
-    type: ActionType.GET_PLAYERS_REQUEST,
+    type: ActionType.STOP_PLAYERS_POLL,
   };
 }
 

@@ -1,10 +1,17 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {getPlayersAction} from '../actions/getPlayers';
+import {
+  startPlayersPollAction,
+  stopPlayersPollAction,
+} from '../actions/getPlayers';
 import {selectPlayers} from '../selectors/players';
 
 function PlayerList() {
   const players = useSelector(selectPlayers);
   const dispatch = useDispatch();
+
+  if (players.length === 0) {
+    dispatch(startPlayersPollAction());
+  }
 
   return (
     <div>
@@ -14,7 +21,7 @@ function PlayerList() {
           <b>{p.name}</b> ${p.money}
         </p>
       ))}
-      <button onClick={() => dispatch(getPlayersAction())}>REFRESH</button>
+      <button onClick={() => dispatch(stopPlayersPollAction())}>READY</button>
     </div>
   );
 }
