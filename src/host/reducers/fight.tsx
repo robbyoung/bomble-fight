@@ -23,6 +23,8 @@ export default function fight(
   switch (action.type) {
     case ActionType.PROGRESS_FIGHT_SUCCESS:
       return progressFight(state, action as ProgressFightSuccessAction);
+    case ActionType.RESET_FIGHT_SUCCESS:
+      return defaultState;
     default:
       return state;
   }

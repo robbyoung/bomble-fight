@@ -10,4 +10,8 @@ export enum ActionType {
   PROGRESS_FIGHT_REQUEST = 'Progress Fight Request',
   PROGRESS_FIGHT_SUCCESS = 'Progress Fight Success',
   PROGRESS_FIGHT_FAILURE = 'Progress Fight Failure',
+
+  RESET_FIGHT_REQUEST = 'Reset Fight Request',
+  RESET_FIGHT_SUCCESS = 'Reset Fight Success',
+  RESET_FIGHT_FAILURE = 'Reset Fight Failure',
 }

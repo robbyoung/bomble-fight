@@ -1,7 +1,13 @@
+import FightDisplay from './components/fightDisplay';
 import PlayerList from './components/playerList';
 
 function App() {
-  return <PlayerList />;
+  return (
+    <div>
+      <PlayerList />
+      <FightDisplay />
+    </div>
+  );
 }
 
 export default App;

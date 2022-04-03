@@ -16,9 +16,15 @@ import {
 } from '../actions/getCombatants';
 import {
   GetCombatantsResponse,
+  GetPlayerStateResponse,
   PostBetResponse,
   PostPlayerResponse,
 } from '../../api';
+import {
+  GetPlayerStateAction,
+  getPlayerStateSuccessAction,
+} from '../actions/getPlayerState';
+import {getPlayersFailureAction} from '../../host/actions/getPlayers';
 
 const baseUrl = 'http://localhost:3001';
 
@@ -57,10 +63,22 @@ function* postBet(action: AddBetAction) {
   }
 }
 
+function* getPlayerState(action: GetPlayerStateAction) {
+  try {
+    const json: GetPlayerStateResponse = yield fetch(
+      `${baseUrl}/state/${action.playerId}`,
+    ).then((response) => response.json());
+    yield put(getPlayerStateSuccessAction(json));
+  } catch {
+    yield put(getPlayersFailureAction());
+  }
+}
+
 function* saga() {
   yield takeLatest(ActionType.GET_COMBATANTS_REQUEST, getCombatants);
   yield takeEvery(ActionType.ADD_PLAYER_REQUEST, postPlayer);
   yield takeEvery(ActionType.ADD_BET_REQUEST, postBet);
+  yield takeLatest(ActionType.GET_STATE_REQUEST, getPlayerState);
 }
 
 export default saga;

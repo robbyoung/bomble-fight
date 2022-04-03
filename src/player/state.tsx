@@ -1,7 +1,8 @@
-import {Bet, Combatant, Player} from '../models';
+import {Bet, Combatant, FightStatus, Player} from '../models';
 
 export interface State {
   player: Player;
   combatants: Combatant[];
   bet: Bet;
+  fightStatus: FightStatus;
 }
