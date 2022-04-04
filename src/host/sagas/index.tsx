@@ -51,10 +51,10 @@ function* pollPlayers() {
         (response) => response.json(),
       );
       yield put(getPlayersSuccessAction(json));
-      yield delay(2000);
     } catch {
       yield put(getPlayersFailureAction());
     }
+    yield delay(2000);
   }
 }
 
@@ -88,10 +88,10 @@ function* playersPollWatcher() {
 }
 
 function* saga() {
-  yield playersPollWatcher();
   yield takeLatest(ActionType.GET_COMBATANTS_REQUEST, getCombatants);
   yield takeEvery(ActionType.PROGRESS_FIGHT_REQUEST, postFight);
   yield takeEvery(ActionType.RESET_FIGHT_REQUEST, resetFight);
+  yield playersPollWatcher();
 }
 
 export default saga;

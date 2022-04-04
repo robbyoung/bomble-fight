@@ -2,15 +2,15 @@ import {Action} from 'redux';
 import {GetPlayerStateResponse} from '../../api';
 import {ActionType} from './actionType';
 
-export interface GetPlayerStateAction extends Action {
-  type: ActionType.GET_STATE_REQUEST;
-  playerId: string;
+export function startPlayerStatePollAction(): Action {
+  return {
+    type: ActionType.START_STATE_POLL,
+  };
 }
 
-export function getPlayerState(playerId: string): GetPlayerStateAction {
+export function stopPlayerStatePollAction(): Action {
   return {
-    type: ActionType.GET_STATE_REQUEST,
-    playerId,
+    type: ActionType.STOP_STATE_POLL,
   };
 }
 

@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   startPlayersPollAction,
@@ -8,9 +9,11 @@ import {selectPlayers} from '../selectors/players';
 function PlayerList() {
   const players = useSelector(selectPlayers);
   const dispatch = useDispatch();
+  const [isPolling, setIsPolling] = useState(false);
 
-  if (players.length === 0) {
+  if (!isPolling) {
     dispatch(startPlayersPollAction());
+    setIsPolling(true);
   }
 
   return (
