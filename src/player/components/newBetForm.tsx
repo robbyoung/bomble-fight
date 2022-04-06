@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCombatantsAction} from '../../host/actions/getCombatants';
 import {addBetAction} from '../actions/addBet';
@@ -11,6 +11,10 @@ function NewBetForm() {
   const player = useSelector(selectPlayer);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getCombatantsAction());
+  }, [dispatch]);
+
   return (
     <div>
       <div>
@@ -18,7 +22,6 @@ function NewBetForm() {
           <button onClick={() => setCombatantId(c.id)}>{c.name}</button>
         ))}
       </div>
-      <button onClick={() => dispatch(getCombatantsAction())}>REFRESH</button>
       <button
         onClick={() => dispatch(addBetAction(player.id, combatantId, 50))}>
         SUBMIT
