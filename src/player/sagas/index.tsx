@@ -1,4 +1,13 @@
-import {put, takeEvery, takeLatest} from 'redux-saga/effects';
+import {
+  call,
+  delay,
+  put,
+  race,
+  select,
+  take,
+  takeEvery,
+  takeLatest,
+} from 'redux-saga/effects';
 import {ActionType} from '../actions/actionType';
 import {
   AddBetAction,
@@ -20,11 +29,10 @@ import {
   PostBetResponse,
   PostPlayerResponse,
 } from '../../api';
-import {
-  GetPlayerStateAction,
-  getPlayerStateSuccessAction,
-} from '../actions/getPlayerState';
+import {getPlayerStateSuccessAction} from '../actions/getPlayerState';
 import {getPlayersFailureAction} from '../../host/actions/getPlayers';
+import {selectPlayer} from '../selectors/player';
+import {Player} from '../../models';
 
 const baseUrl = 'http://localhost:3001';
 
@@ -63,14 +71,25 @@ function* postBet(action: AddBetAction) {
   }
 }
 
-function* getPlayerState(action: GetPlayerStateAction) {
-  try {
-    const json: GetPlayerStateResponse = yield fetch(
-      `${baseUrl}/state/${action.playerId}`,
-    ).then((response) => response.json());
-    yield put(getPlayerStateSuccessAction(json));
-  } catch {
-    yield put(getPlayersFailureAction());
+function* pollPlayerState() {
+  while (true) {
+    try {
+      const player: Player = yield select(selectPlayer);
+      const json: GetPlayerStateResponse = yield fetch(
+        `${baseUrl}/state/${player.id}`,
+      ).then((response) => response.json());
+      yield put(getPlayerStateSuccessAction(json));
+    } catch {
+      yield put(getPlayersFailureAction());
+    }
+    yield delay(2000);
+  }
+}
+
+function* statePollWatcher() {
+  while (true) {
+    yield take(ActionType.START_STATE_POLL);
+    yield race([call(pollPlayerState), take(ActionType.STOP_STATE_POLL)]);
   }
 }
 
@@ -78,7 +97,7 @@ function* saga() {
   yield takeLatest(ActionType.GET_COMBATANTS_REQUEST, getCombatants);
   yield takeEvery(ActionType.ADD_PLAYER_REQUEST, postPlayer);
   yield takeEvery(ActionType.ADD_BET_REQUEST, postBet);
-  yield takeLatest(ActionType.GET_STATE_REQUEST, getPlayerState);
+  yield statePollWatcher();
 }
 
 export default saga;

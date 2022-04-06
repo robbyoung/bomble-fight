@@ -3,9 +3,11 @@ export enum ActionType {
   ADD_PLAYER_SUCCESS = 'Add Player Success',
   ADD_PLAYER_FAILURE = 'Add Player Failure',
 
-  GET_STATE_REQUEST = 'Get Player State Request',
   GET_STATE_SUCCESS = 'Get Player State Success',
   GET_STATE_FAILURE = 'Get Player State Failure',
+
+  START_STATE_POLL = 'Start Polling Player State',
+  STOP_STATE_POLL = 'Stop Polling Player State',
 
   GET_COMBATANTS_REQUEST = 'Get Combatants Request',
   GET_COMBATANTS_SUCCESS = 'Get Combatants Success',

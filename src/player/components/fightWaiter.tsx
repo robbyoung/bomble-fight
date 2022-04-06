@@ -1,13 +1,11 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {FightStatus} from '../../models';
-import {getPlayerState} from '../actions/getPlayerState';
 import {selectFightStatus} from '../selectors/fight';
 import {selectPlayer} from '../selectors/player';
 
 function FightWaiter() {
   const status = useSelector(selectFightStatus);
   const player = useSelector(selectPlayer);
-  const dispatch = useDispatch();
 
   var message;
   switch (status) {
@@ -26,9 +24,6 @@ function FightWaiter() {
   return (
     <div>
       <p>{message}</p>
-      <button onClick={() => dispatch(getPlayerState(player.id))}>
-        REFRESH
-      </button>
     </div>
   );
 }
