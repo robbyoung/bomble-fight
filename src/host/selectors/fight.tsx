@@ -31,19 +31,19 @@ export const selectFightStepDetails = createSelector(
   selectFight,
   (combatants, fight) => {
     return combatants.map((c) => {
-      if (c.id === fight.attackerId) {
+      if (c.id === fight.left.id) {
         return {
           name: c.name,
           maxHealth: c.health,
-          currentHealth: fight.attackerHealth,
-          damage: fight.attackerDamage,
+          currentHealth: fight.left.health,
+          loss: fight.left.loss,
         };
       } else {
         return {
           name: c.name,
           maxHealth: c.health,
-          currentHealth: fight.defenderHealth,
-          damage: fight.defenderDamage,
+          currentHealth: fight.right.health,
+          loss: fight.right.loss,
         };
       }
     });

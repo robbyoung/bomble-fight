@@ -6,6 +6,12 @@ export interface GetCombatantsResponse {
     Name: string;
     Health: number;
     Streak: number;
+
+    Ferocity: number;
+    Endurance: number;
+    Skill: number;
+    Agility: number;
+    Speed: number;
   }[];
   count: number;
 }
@@ -32,12 +38,18 @@ export interface PostBetResponse {
 }
 
 export interface PostFightResponse {
-  AttackerId: string;
-  DefenderId: string;
-  AttackerHealth: number;
-  DefenderHealth: number;
-  AttackerDamage: number;
-  DefenderDamage: number;
+  Left: {
+    Id: string;
+    Health: number;
+    Loss: number;
+    Action: number;
+  };
+  Right: {
+    Id: string;
+    Health: number;
+    Loss: number;
+    Action: number;
+  };
   FightStatus: FightStatus;
 }
 

@@ -43,6 +43,12 @@ export function getCombatants(action: GetCombatantsSuccessAction): Combatant[] {
       name: combatant.Name,
       health: combatant.Health,
       id: combatant.Id,
+
+      ferocity: combatant.Ferocity,
+      endurance: combatant.Endurance,
+      agility: combatant.Agility,
+      skill: combatant.Skill,
+      speed: combatant.Speed,
     };
   });
 }

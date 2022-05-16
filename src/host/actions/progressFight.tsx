@@ -43,11 +43,17 @@ export function progressFight(
 ): Fight {
   return {
     status: action.response.FightStatus,
-    attackerId: action.response.AttackerId,
-    defenderId: action.response.DefenderId,
-    attackerDamage: action.response.AttackerDamage,
-    defenderDamage: action.response.DefenderDamage,
-    attackerHealth: action.response.AttackerHealth,
-    defenderHealth: action.response.DefenderHealth,
+    left: {
+      id: action.response.Left.Id,
+      health: action.response.Left.Health,
+      loss: action.response.Left.Loss,
+      action: action.response.Left.Action,
+    },
+    right: {
+      id: action.response.Right.Id,
+      health: action.response.Right.Health,
+      loss: action.response.Right.Loss,
+      action: action.response.Right.Action,
+    },
   };
 }

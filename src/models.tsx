@@ -12,6 +12,12 @@ export interface Combatant {
   id: string;
   name: string;
   health: number;
+
+  ferocity: number;
+  endurance: number;
+  skill: number;
+  agility: number;
+  speed: number;
 }
 
 export interface Bet {
@@ -27,12 +33,23 @@ export enum FightStatus {
   Finished,
 }
 
+export enum FightAction {
+  Nothing,
+  Attack,
+  Critical,
+  Dodge,
+  Block,
+}
+
+export interface CombatantStatus {
+  id: string;
+  health: number;
+  loss: number;
+  action: FightAction;
+}
+
 export interface Fight {
-  attackerId: string;
-  defenderId: string;
-  attackerHealth: number;
-  defenderHealth: number;
-  attackerDamage: number;
-  defenderDamage: number;
+  left: CombatantStatus;
+  right: CombatantStatus;
   status: FightStatus;
 }

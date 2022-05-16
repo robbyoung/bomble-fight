@@ -1,4 +1,4 @@
-import {Fight, FightStatus} from '../../models';
+import {Fight, FightAction, FightStatus} from '../../models';
 import {Action} from 'redux';
 import {ActionType} from '../actions/actionType';
 import {
@@ -7,12 +7,18 @@ import {
 } from '../actions/progressFight';
 
 const defaultState: Fight = {
-  attackerId: '',
-  defenderId: '',
-  attackerDamage: 0,
-  defenderDamage: 0,
-  attackerHealth: 50,
-  defenderHealth: 50,
+  left: {
+    id: '',
+    health: 50,
+    loss: 0,
+    action: FightAction.Nothing,
+  },
+  right: {
+    id: '',
+    health: 50,
+    loss: 0,
+    action: FightAction.Nothing,
+  },
   status: FightStatus.Pending,
 };
 
