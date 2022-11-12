@@ -1,4 +1,4 @@
-#bomble-fight-backend
+# Bomble Fight API
 
 Based on template: https://github.com/leeprovoost/go-rest-api-template
 
@@ -21,6 +21,6 @@ To run postman collection with Newman, run the following after setting the envir
 ```
 
 To kill the api running in the background, run the following (Windows):
-````
+```
 TASKKILL //F //IM api-service.exe
 ```
