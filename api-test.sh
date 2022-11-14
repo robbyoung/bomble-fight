@@ -1,0 +1,3 @@
+cd apps/api/internal
+go build
+go test ./...
