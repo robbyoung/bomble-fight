@@ -1,13 +1,14 @@
 package combatants
 
 import (
+	"bomble-fight/internal/common"
 	"fmt"
-	"math/rand"
 	"strings"
-	"time"
 )
 
 type CombatantAggregate struct {
+	rand common.IRandom
+
 	Id     string
 	Name   string
 	Health int
@@ -18,6 +19,9 @@ type CombatantAggregate struct {
 	Endurance int
 	Skill     int
 	Speed     int
+}
+
+type CombatantAction struct {
 }
 
 var names = []string{
@@ -33,23 +37,23 @@ var names = []string{
 	"Guy",
 }
 
-var r = rand.New(rand.NewSource(time.Now().UnixNano()))
-
-func NewCombatantAggregate() *CombatantAggregate {
-	n := names[r.Intn(len(names))]
-	id := fmt.Sprintf("%s_%d", n, r.Intn(900)+100)
+func NewCombatantAggregate(r common.IRandom) *CombatantAggregate {
+	n := r.RandArrayEntry(names)
+	id := fmt.Sprintf("%s_%d", n, r.RandInt(100, 900))
 
 	agg := CombatantAggregate{
+		rand: r,
+
 		Id:     strings.ToLower(id),
 		Name:   n,
 		Health: 50,
 		Streak: 0,
 
-		Ferocity:  r.Intn(10) + 1,
-		Endurance: r.Intn(10) + 1,
-		Skill:     r.Intn(10) + 1,
-		Agility:   r.Intn(10) + 1,
-		Speed:     r.Intn(10) + 1,
+		Ferocity:  r.RandInt(0, 10),
+		Endurance: r.RandInt(0, 10),
+		Skill:     r.RandInt(0, 10),
+		Agility:   r.RandInt(0, 10),
+		Speed:     r.RandInt(0, 10),
 	}
 
 	return &agg
