@@ -21,7 +21,18 @@ type CombatantAggregate struct {
 	Speed     int
 }
 
+type ActionCode int
+
+const (
+	Attack ActionCode = 0
+	Hit    ActionCode = 1
+	Dodge  ActionCode = 2
+	Idle   ActionCode = 3
+)
+
 type CombatantAction struct {
+	Code   ActionCode
+	Detail int
 }
 
 var names = []string{
@@ -57,4 +68,34 @@ func NewCombatantAggregate(r common.IRandom) *CombatantAggregate {
 	}
 
 	return &agg
+}
+
+func (combatant *CombatantAggregate) Respond(action CombatantAction) *CombatantAction {
+	switch action.Code {
+	case Attack:
+		return combatant.respondToAttack(action.Detail)
+	default:
+		return &CombatantAction{
+			Code:   Idle,
+			Detail: 0,
+		}
+	}
+
+}
+
+func (combatant *CombatantAggregate) respondToAttack(damage int) *CombatantAction {
+	dodgeRoll := combatant.rand.RandInt(1, 11)
+	if dodgeRoll < combatant.Agility {
+		return &CombatantAction{
+			Code:   Dodge,
+			Detail: 0,
+		}
+	}
+
+	combatant.Health -= damage
+
+	return &CombatantAction{
+		Code:   Hit,
+		Detail: damage,
+	}
 }

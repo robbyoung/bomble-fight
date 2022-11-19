@@ -1,15 +1,20 @@
 package spec
 
 type MockRandom struct {
-	intToReturn int
+	returnValues []int
+	index        int
 }
 
-func NewMockRandom(intToReturn int) *MockRandom {
-	return &MockRandom{intToReturn: intToReturn}
+func NewMockRandom(returnValues []int) *MockRandom {
+	return &MockRandom{returnValues: returnValues, index: 0}
 }
 
 func (r *MockRandom) RandInt(min int, max int) int {
-	return r.intToReturn
+	result := r.returnValues[r.index]
+
+	r.index = (r.index + 1) % len(r.returnValues)
+
+	return result
 }
 
 func (r *MockRandom) RandArrayEntry(arr []string) string {
