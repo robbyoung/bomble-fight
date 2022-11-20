@@ -24,10 +24,11 @@ type CombatantAggregate struct {
 type ActionCode int
 
 const (
-	Attack ActionCode = 0
-	Hit    ActionCode = 1
-	Dodge  ActionCode = 2
-	Idle   ActionCode = 3
+	Attack   ActionCode = 0
+	Hit      ActionCode = 1
+	Dodge    ActionCode = 2
+	Idle     ActionCode = 3
+	Critical ActionCode = 4
 )
 
 type CombatantAction struct {
@@ -70,6 +71,22 @@ func NewCombatantAggregate(r common.IRandom) *CombatantAggregate {
 	return &agg
 }
 
+func (combatant *CombatantAggregate) Initiate() *CombatantAction {
+	damage := combatant.Ferocity
+
+	if combatant.rollForAbility(combatant.Skill) {
+		return &CombatantAction{
+			Code:   Critical,
+			Detail: damage * 2,
+		}
+	}
+
+	return &CombatantAction{
+		Code:   Attack,
+		Detail: damage,
+	}
+}
+
 func (combatant *CombatantAggregate) Respond(action CombatantAction) *CombatantAction {
 	switch action.Code {
 	case Attack:
@@ -80,12 +97,10 @@ func (combatant *CombatantAggregate) Respond(action CombatantAction) *CombatantA
 			Detail: 0,
 		}
 	}
-
 }
 
 func (combatant *CombatantAggregate) respondToAttack(damage int) *CombatantAction {
-	dodgeRoll := combatant.rand.RandInt(1, 11)
-	if dodgeRoll < combatant.Agility {
+	if combatant.rollForAbility(combatant.Agility) {
 		return &CombatantAction{
 			Code:   Dodge,
 			Detail: 0,
@@ -98,4 +113,10 @@ func (combatant *CombatantAggregate) respondToAttack(damage int) *CombatantActio
 		Code:   Hit,
 		Detail: damage,
 	}
+}
+
+func (combatant *CombatantAggregate) rollForAbility(threshold int) bool {
+	roll := combatant.rand.RandInt(0, 10)
+
+	return roll <= threshold
 }

@@ -22,6 +22,26 @@ func TestNewCombatantAggregate(t *testing.T) {
 	spec.ExpectEqualInts(t, 2, agg.Speed)
 }
 
+func TestInitiateWithAttack(t *testing.T) {
+	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 1, 4})
+	agg := NewCombatantAggregate(r)
+
+	response := agg.Initiate()
+
+	spec.ExpectEqualInts(t, int(Attack), int(response.Code))
+	spec.ExpectEqualInts(t, 4, response.Detail)
+}
+
+func TestInitiateWithCriticalAttack(t *testing.T) {
+	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 5, 4})
+	agg := NewCombatantAggregate(r)
+
+	response := agg.Initiate()
+
+	spec.ExpectEqualInts(t, int(Critical), int(response.Code))
+	spec.ExpectEqualInts(t, 8, response.Detail)
+}
+
 func TestRespondToAttackWithDodge(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 1})
 	agg := NewCombatantAggregate(r)
