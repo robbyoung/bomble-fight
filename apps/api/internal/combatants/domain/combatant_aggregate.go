@@ -29,6 +29,7 @@ const (
 	Dodge    ActionCode = 2
 	Idle     ActionCode = 3
 	Critical ActionCode = 4
+	Block    ActionCode = 5
 )
 
 type CombatantAction struct {
@@ -103,6 +104,13 @@ func (combatant *CombatantAggregate) respondToAttack(damage int) *CombatantActio
 	if combatant.rollForAbility(combatant.Agility) {
 		return &CombatantAction{
 			Code:   Dodge,
+			Detail: 0,
+		}
+	}
+
+	if combatant.rollForAbility(combatant.Endurance) {
+		return &CombatantAction{
+			Code:   Block,
 			Detail: 0,
 		}
 	}

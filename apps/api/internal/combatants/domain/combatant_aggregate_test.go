@@ -23,27 +23,27 @@ func TestNewCombatantAggregate(t *testing.T) {
 }
 
 func TestInitiateWithAttack(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 1, 4})
-	agg := NewCombatantAggregate(r)
-
-	response := agg.Initiate()
-
-	spec.ExpectEqualInts(t, int(Attack), int(response.Code))
-	spec.ExpectEqualInts(t, 4, response.Detail)
-}
-
-func TestInitiateWithCriticalAttack(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 5, 4})
 	agg := NewCombatantAggregate(r)
 
 	response := agg.Initiate()
 
+	spec.ExpectEqualInts(t, int(Attack), int(response.Code))
+	spec.ExpectEqualInts(t, 2, response.Detail)
+}
+
+func TestInitiateWithCriticalAttack(t *testing.T) {
+	r := spec.NewMockRandom([]int{1, 1, 3, 2, 2, 2, 2, 1, 4})
+	agg := NewCombatantAggregate(r)
+
+	response := agg.Initiate()
+
 	spec.ExpectEqualInts(t, int(Critical), int(response.Code))
-	spec.ExpectEqualInts(t, 8, response.Detail)
+	spec.ExpectEqualInts(t, 6, response.Detail)
 }
 
 func TestRespondToAttackWithDodge(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 1})
+	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 1, 8})
 	agg := NewCombatantAggregate(r)
 
 	action := CombatantAction{
@@ -56,8 +56,22 @@ func TestRespondToAttackWithDodge(t *testing.T) {
 	spec.ExpectEqualInts(t, 50, agg.Health)
 }
 
+func TestRespondToAttackWithBlock(t *testing.T) {
+	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 8, 1})
+	agg := NewCombatantAggregate(r)
+
+	action := CombatantAction{
+		Code:   Attack,
+		Detail: 10,
+	}
+	response := agg.Respond(action)
+
+	spec.ExpectEqualInts(t, int(Block), int(response.Code))
+	spec.ExpectEqualInts(t, 50, agg.Health)
+}
+
 func TestRespondToAttackWithHit(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 8})
+	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 8, 8})
 	agg := NewCombatantAggregate(r)
 
 	action := CombatantAction{
