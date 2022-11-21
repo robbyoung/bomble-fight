@@ -112,3 +112,32 @@ func (combatant *CombatantAggregate) rollForAbility(threshold int) bool {
 
 	return roll <= threshold
 }
+
+func FromPersistence(model *CombatantPersistedModel, r common.IRandom) *CombatantAggregate {
+	return &CombatantAggregate{
+		rand:      r,
+		Id:        model.Id,
+		Name:      model.Name,
+		Health:    model.Health,
+		Streak:    model.Streak,
+		Ferocity:  model.Ferocity,
+		Endurance: model.Endurance,
+		Skill:     model.Skill,
+		Agility:   model.Agility,
+		Speed:     model.Speed,
+	}
+}
+
+func (combatant *CombatantAggregate) ToPersistence() *CombatantPersistedModel {
+	return &CombatantPersistedModel{
+		Id:        combatant.Id,
+		Name:      combatant.Name,
+		Health:    combatant.Health,
+		Streak:    combatant.Streak,
+		Ferocity:  combatant.Ferocity,
+		Endurance: combatant.Endurance,
+		Skill:     combatant.Skill,
+		Agility:   combatant.Agility,
+		Speed:     combatant.Speed,
+	}
+}

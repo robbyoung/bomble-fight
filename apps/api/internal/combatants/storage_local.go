@@ -1,19 +1,22 @@
 package combatants
 
+import "bomble-fight/internal/common"
+
 type LocalCombatantStorage struct {
-	combatants map[string]*CombatantAggregate
+	combatants map[string]*CombatantPersistedModel
+	r          common.IRandom
 }
 
-func CreateLocalCombatantStorage() *LocalCombatantStorage {
+func NewLocalCombatantStorage(r common.IRandom) *LocalCombatantStorage {
 	return &LocalCombatantStorage{
-		combatants: make(map[string]*CombatantAggregate),
+		combatants: make(map[string]*CombatantPersistedModel),
 	}
 }
 
 func (storage *LocalCombatantStorage) LoadCombatant(id string) *CombatantAggregate {
-	return storage.combatants[id]
+	return FromPersistence(storage.combatants[id], storage.r)
 }
 
 func (storage *LocalCombatantStorage) SaveCombatant(combatant *CombatantAggregate) {
-	storage.combatants[combatant.Id] = combatant
+	storage.combatants[combatant.Id] = combatant.ToPersistence()
 }

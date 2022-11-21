@@ -1,5 +1,18 @@
 package combatants
 
+type CombatantPersistedModel struct {
+	Id     string
+	Name   string
+	Health int
+	Streak int
+
+	Ferocity  int
+	Agility   int
+	Endurance int
+	Skill     int
+	Speed     int
+}
+
 type ActionCode int
 
 const (
