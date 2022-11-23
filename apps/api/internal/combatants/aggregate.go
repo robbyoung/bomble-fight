@@ -72,9 +72,11 @@ func (combatant *CombatantAggregate) Initiate() *CombatantAction {
 	}
 }
 
-func (combatant *CombatantAggregate) Respond(action CombatantAction) *CombatantAction {
+func (combatant *CombatantAggregate) Respond(action *CombatantAction) *CombatantAction {
 	switch action.Code {
 	case Attack:
+		return combatant.respondToAttack(action.Detail)
+	case Critical:
 		return combatant.respondToAttack(action.Detail)
 	default:
 		return &CombatantAction{

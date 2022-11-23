@@ -10,6 +10,7 @@ type LocalCombatantStorage struct {
 func NewLocalCombatantStorage(r common.IRandom) *LocalCombatantStorage {
 	return &LocalCombatantStorage{
 		combatants: make(map[string]*CombatantPersistedModel),
+		r:          r,
 	}
 }
 

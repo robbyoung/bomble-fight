@@ -32,6 +32,10 @@ func TestCombatantStorageSaveAndLoad(t *testing.T) {
 		t.Fatalf("Loaded combatant uses same pointer as original")
 	}
 
+	if loaded.rand == nil {
+		t.Fatalf("Loaded combatant has a nil random generator")
+	}
+
 	spec.ExpectEqualStrings(t, original.Id, loaded.Id)
 	spec.ExpectEqualStrings(t, original.Name, loaded.Name)
 	spec.ExpectEqualInts(t, original.Health, loaded.Health)
