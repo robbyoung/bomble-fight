@@ -1,10 +1,11 @@
 package combatants
 
 type CombatantPersistedModel struct {
-	Id     string
-	Name   string
-	Health int
-	Streak int
+	Id            string
+	Name          string
+	MaxHealth     int
+	CurrentHealth int
+	Streak        int
 
 	Ferocity  int
 	Agility   int
@@ -22,6 +23,7 @@ const (
 	Idle     ActionCode = 3
 	Critical ActionCode = 4
 	Block    ActionCode = 5
+	Killed   ActionCode = 6
 )
 
 type CombatantAction struct {

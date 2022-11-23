@@ -9,10 +9,11 @@ import (
 type CombatantAggregate struct {
 	rand common.IRandom
 
-	Id     string
-	Name   string
-	Health int
-	Streak int
+	Id            string
+	Name          string
+	MaxHealth     int
+	CurrentHealth int
+	Streak        int
 
 	Ferocity  int
 	Agility   int
@@ -41,10 +42,11 @@ func NewCombatantAggregate(r common.IRandom) *CombatantAggregate {
 	agg := CombatantAggregate{
 		rand: r,
 
-		Id:     strings.ToLower(id),
-		Name:   n,
-		Health: 50,
-		Streak: 0,
+		Id:            strings.ToLower(id),
+		Name:          n,
+		MaxHealth:     50,
+		CurrentHealth: 50,
+		Streak:        0,
 
 		Ferocity:  r.RandInt(0, 10),
 		Endurance: r.RandInt(0, 10),
@@ -80,8 +82,7 @@ func (combatant *CombatantAggregate) Respond(action *CombatantAction) *Combatant
 		return combatant.respondToAttack(action.Detail)
 	default:
 		return &CombatantAction{
-			Code:   Idle,
-			Detail: 0,
+			Code: Idle,
 		}
 	}
 }
@@ -89,23 +90,27 @@ func (combatant *CombatantAggregate) Respond(action *CombatantAction) *Combatant
 func (combatant *CombatantAggregate) respondToAttack(damage int) *CombatantAction {
 	if combatant.rollForAbility(combatant.Agility) {
 		return &CombatantAction{
-			Code:   Dodge,
-			Detail: 0,
+			Code: Dodge,
 		}
 	}
 
 	if combatant.rollForAbility(combatant.Endurance) {
 		return &CombatantAction{
-			Code:   Block,
-			Detail: 0,
+			Code: Block,
 		}
 	}
 
-	combatant.Health -= damage
+	combatant.CurrentHealth -= damage
+
+	if combatant.CurrentHealth <= 0 {
+		combatant.CurrentHealth = 0
+		return &CombatantAction{
+			Code: Killed,
+		}
+	}
 
 	return &CombatantAction{
-		Code:   Hit,
-		Detail: damage,
+		Code: Hit,
 	}
 }
 
@@ -117,29 +122,31 @@ func (combatant *CombatantAggregate) rollForAbility(threshold int) bool {
 
 func FromPersistence(model *CombatantPersistedModel, r common.IRandom) *CombatantAggregate {
 	return &CombatantAggregate{
-		rand:      r,
-		Id:        model.Id,
-		Name:      model.Name,
-		Health:    model.Health,
-		Streak:    model.Streak,
-		Ferocity:  model.Ferocity,
-		Endurance: model.Endurance,
-		Skill:     model.Skill,
-		Agility:   model.Agility,
-		Speed:     model.Speed,
+		rand:          r,
+		Id:            model.Id,
+		Name:          model.Name,
+		MaxHealth:     model.MaxHealth,
+		CurrentHealth: model.CurrentHealth,
+		Streak:        model.Streak,
+		Ferocity:      model.Ferocity,
+		Endurance:     model.Endurance,
+		Skill:         model.Skill,
+		Agility:       model.Agility,
+		Speed:         model.Speed,
 	}
 }
 
 func (combatant *CombatantAggregate) ToPersistence() *CombatantPersistedModel {
 	return &CombatantPersistedModel{
-		Id:        combatant.Id,
-		Name:      combatant.Name,
-		Health:    combatant.Health,
-		Streak:    combatant.Streak,
-		Ferocity:  combatant.Ferocity,
-		Endurance: combatant.Endurance,
-		Skill:     combatant.Skill,
-		Agility:   combatant.Agility,
-		Speed:     combatant.Speed,
+		Id:            combatant.Id,
+		Name:          combatant.Name,
+		MaxHealth:     combatant.MaxHealth,
+		CurrentHealth: combatant.CurrentHealth,
+		Streak:        combatant.Streak,
+		Ferocity:      combatant.Ferocity,
+		Endurance:     combatant.Endurance,
+		Skill:         combatant.Skill,
+		Agility:       combatant.Agility,
+		Speed:         combatant.Speed,
 	}
 }

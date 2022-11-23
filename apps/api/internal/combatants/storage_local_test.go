@@ -38,7 +38,8 @@ func TestCombatantStorageSaveAndLoad(t *testing.T) {
 
 	spec.ExpectEqualStrings(t, original.Id, loaded.Id)
 	spec.ExpectEqualStrings(t, original.Name, loaded.Name)
-	spec.ExpectEqualInts(t, original.Health, loaded.Health)
+	spec.ExpectEqualInts(t, original.MaxHealth, loaded.MaxHealth)
+	spec.ExpectEqualInts(t, original.MaxHealth, loaded.CurrentHealth)
 	spec.ExpectEqualInts(t, original.Ferocity, loaded.Ferocity)
 	spec.ExpectEqualInts(t, original.Endurance, loaded.Endurance)
 	spec.ExpectEqualInts(t, original.Skill, loaded.Skill)
