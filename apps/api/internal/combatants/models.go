@@ -14,6 +14,8 @@ type CombatantPersistedModel struct {
 	Speed     int
 }
 
+type Combatant = CombatantPersistedModel
+
 type ActionCode int
 
 const (

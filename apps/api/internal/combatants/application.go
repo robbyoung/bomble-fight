@@ -1,11 +1,26 @@
 package combatants
 
+import "bomble-fight/internal/common"
+
 type CombatantApplication struct {
 	storage ICombatantStorage
+	rand    common.IRandom
 }
 
-func NewCombatantApplication(storage ICombatantStorage) *CombatantApplication {
-	return &CombatantApplication{storage: storage}
+func NewCombatantApplication(storage ICombatantStorage, r common.IRandom) *CombatantApplication {
+	return &CombatantApplication{storage: storage, rand: r}
+}
+
+func (app *CombatantApplication) GenerateCombatants(count int) []*Combatant {
+	results := make([]*Combatant, count)
+
+	for i := 0; i < count; i++ {
+		c := NewCombatantAggregate(app.rand)
+		app.storage.SaveCombatant(c)
+		results[i] = ConvertToCombatantModel(c)
+	}
+
+	return results
 }
 
 func (app *CombatantApplication) Fight(id1 string, id2 string) (*CombatantAction, *CombatantAction) {
@@ -19,4 +34,8 @@ func (app *CombatantApplication) Fight(id1 string, id2 string) (*CombatantAction
 	app.storage.SaveCombatant(c2)
 
 	return a1, a2
+}
+
+func ConvertToCombatantModel(c *CombatantAggregate) *Combatant {
+	return c.ToPersistence()
 }

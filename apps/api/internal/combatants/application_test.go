@@ -1,6 +1,7 @@
 package combatants
 
 import (
+	"bomble-fight/internal/common"
 	"bomble-fight/internal/spec"
 	"testing"
 )
@@ -8,11 +9,33 @@ import (
 func TestNewCombatantApplication(t *testing.T) {
 	r := spec.NewMockRandom([]int{1})
 	storage := NewLocalCombatantStorage(r)
-	app := NewCombatantApplication(storage)
+	app := NewCombatantApplication(storage, r)
 
 	if app == nil {
 		t.Fatalf("NewCombatantApplication() returned nil")
 	}
+}
+
+func TestGenerateCombatants(t *testing.T) {
+	r := common.NewRandom()
+	storage := NewLocalCombatantStorage(r)
+
+	storage.SaveCombatant(NewCombatantAggregate(r))
+	storage.SaveCombatant(NewCombatantAggregate(r))
+
+	app := NewCombatantApplication(storage, r)
+
+	result := app.GenerateCombatants(3)
+
+	if len(result) != 3 {
+		t.Errorf("Expected 3 combatants to be generated, got %d", len(result))
+	}
+
+	if result[0] == nil || result[1] == nil || result[2] == nil {
+		t.Errorf("One or more of the generated combatants was nil")
+	}
+
+	spec.ExpectEqualInts(t, 5, len(storage.combatants), "Unexpected stored combatants count")
 }
 
 func TestFight(t *testing.T) {
@@ -24,7 +47,7 @@ func TestFight(t *testing.T) {
 	storage.SaveCombatant(c1)
 	storage.SaveCombatant(c2)
 
-	app := NewCombatantApplication(storage)
+	app := NewCombatantApplication(storage, r)
 	a1, a2 := app.Fight(c1.Id, c2.Id)
 
 	c2 = storage.LoadCombatant(c2.Id)
@@ -37,7 +60,6 @@ func TestFight(t *testing.T) {
 		t.Errorf("Expected Hit from combatant 2, got %d", int(a2.Code))
 	}
 
-	if c2.CurrentHealth != 40 {
-		spec.ExpectEqualInts(t, 40, c2.CurrentHealth, "Unexpected combatant 2 health")
-	}
+	spec.ExpectEqualInts(t, 40, c2.CurrentHealth, "Unexpected combatant 2 health")
+
 }
