@@ -1,3 +1,2 @@
 cd apps/api/internal
-go build
-go test ./...
+go test bomble-fight/internal/combatants

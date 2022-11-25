@@ -36,13 +36,13 @@ func TestCombatantStorageSaveAndLoad(t *testing.T) {
 		t.Fatalf("Loaded combatant has a nil random generator")
 	}
 
-	spec.ExpectEqualStrings(t, original.Id, loaded.Id)
-	spec.ExpectEqualStrings(t, original.Name, loaded.Name)
-	spec.ExpectEqualInts(t, original.MaxHealth, loaded.MaxHealth)
-	spec.ExpectEqualInts(t, original.MaxHealth, loaded.CurrentHealth)
-	spec.ExpectEqualInts(t, original.Ferocity, loaded.Ferocity)
-	spec.ExpectEqualInts(t, original.Endurance, loaded.Endurance)
-	spec.ExpectEqualInts(t, original.Skill, loaded.Skill)
-	spec.ExpectEqualInts(t, original.Agility, loaded.Agility)
-	spec.ExpectEqualInts(t, original.Speed, loaded.Speed)
+	spec.ExpectEqualStrings(t, original.Id, loaded.Id, "Id mismatch")
+	spec.ExpectEqualStrings(t, original.Name, loaded.Name, "Name mismatch")
+	spec.ExpectEqualInts(t, original.MaxHealth, loaded.MaxHealth, "MaxHealth mismatch")
+	spec.ExpectEqualInts(t, original.MaxHealth, loaded.CurrentHealth, "CurrentHealth mismatch")
+	spec.ExpectEqualInts(t, original.Ferocity, loaded.Ferocity, "Ferocity mismatch")
+	spec.ExpectEqualInts(t, original.Endurance, loaded.Endurance, "Endurance mismatch")
+	spec.ExpectEqualInts(t, original.Skill, loaded.Skill, "Skill mismatch")
+	spec.ExpectEqualInts(t, original.Agility, loaded.Agility, "Agility mismatch")
+	spec.ExpectEqualInts(t, original.Speed, loaded.Speed, "Speed mismatch")
 }
