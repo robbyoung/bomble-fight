@@ -27,11 +27,17 @@ func TestFight(t *testing.T) {
 	app := NewCombatantApplication(storage)
 	a1, a2 := app.Fight(c1.Id, c2.Id)
 
+	c2 = storage.LoadCombatant(c2.Id)
+
 	if a1.Code != Critical {
 		t.Errorf("Expected Critical from combatant 1, got %d", int(a1.Code))
 	}
 
 	if a2.Code != Hit {
 		t.Errorf("Expected Hit from combatant 2, got %d", int(a2.Code))
+	}
+
+	if c2.CurrentHealth != 40 {
+		spec.ExpectEqualInts(t, 40, c2.CurrentHealth, "Unexpected combatant 2 health")
 	}
 }

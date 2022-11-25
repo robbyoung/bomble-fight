@@ -24,6 +24,8 @@ func TestCombatantStorageSaveAndLoad(t *testing.T) {
 	cs := NewLocalCombatantStorage(r)
 
 	original := NewCombatantAggregate(r)
+	original.Streak = 22
+
 	cs.SaveCombatant(original)
 
 	loaded := cs.LoadCombatant(original.Id)
@@ -45,4 +47,5 @@ func TestCombatantStorageSaveAndLoad(t *testing.T) {
 	spec.ExpectEqualInts(t, original.Skill, loaded.Skill, "Skill mismatch")
 	spec.ExpectEqualInts(t, original.Agility, loaded.Agility, "Agility mismatch")
 	spec.ExpectEqualInts(t, original.Speed, loaded.Speed, "Speed mismatch")
+	spec.ExpectEqualInts(t, original.Streak, loaded.Streak, "Speed mismatch")
 }

@@ -125,3 +125,16 @@ func TestRespondToCriticalWithKilled(t *testing.T) {
 	spec.ExpectEqualInts(t, int(Killed), int(response.Code), "Unexpected action code")
 	spec.ExpectEqualInts(t, 0, agg.CurrentHealth, "Unexpected health value")
 }
+
+func TestVictory(t *testing.T) {
+	r := spec.NewMockRandom([]int{5})
+	agg := NewCombatantAggregate(r)
+
+	agg.Streak = 1
+	agg.CurrentHealth = 1
+
+	agg.Victory()
+
+	spec.ExpectEqualInts(t, 2, agg.Streak, "Unexpected streak value")
+	spec.ExpectEqualInts(t, 50, agg.CurrentHealth, "Unexpected health value")
+}

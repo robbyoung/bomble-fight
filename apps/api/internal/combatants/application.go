@@ -15,5 +15,8 @@ func (app *CombatantApplication) Fight(id1 string, id2 string) (*CombatantAction
 	a1 := c1.Initiate()
 	a2 := c2.Respond(a1)
 
+	app.storage.SaveCombatant(c1)
+	app.storage.SaveCombatant(c2)
+
 	return a1, a2
 }

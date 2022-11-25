@@ -87,6 +87,11 @@ func (combatant *CombatantAggregate) Respond(action *CombatantAction) *Combatant
 	}
 }
 
+func (combatant *CombatantAggregate) Victory() {
+	combatant.CurrentHealth = combatant.MaxHealth
+	combatant.Streak++
+}
+
 func (combatant *CombatantAggregate) respondToAttack(damage int) *CombatantAction {
 	if combatant.rollForAbility(combatant.Agility) {
 		return &CombatantAction{
