@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	bomble "bomble-fight/internal/bomble"
+	"bomble-fight/internal/common"
 	vparse "bomble-fight/pkg/version"
 
 	log "github.com/sirupsen/logrus"
@@ -48,18 +49,13 @@ func main() {
 		"version": version,
 	}).Info("Loaded VERSION file")
 	// ===========================================================================
-	// Initialise data storage
-	// ===========================================================================
-	store := bomble.NewGameService()
-	// ===========================================================================
 	// Initialise application context
 	// ===========================================================================
-	appEnv := bomble.AppEnv{
-		Render:    render.New(),
-		Version:   version,
-		Env:       env,
-		Port:      port,
-		GameStore: store,
+	appEnv := common.AppEnv{
+		Render:  render.New(),
+		Version: version,
+		Env:     env,
+		Port:    port,
 	}
 	// ===========================================================================
 	// Start application

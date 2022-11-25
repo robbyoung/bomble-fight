@@ -1,7 +1,7 @@
 package combatants
 
 type ICombatantApplication interface {
-	GenerateCombatants(string) []*Combatant
+	GenerateCombatants(int) []*Combatant
 	Fight(string, string) (*CombatantAction, *CombatantAction)
 }
 
