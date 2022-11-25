@@ -1,0 +1,65 @@
+package combatants
+
+import (
+	"bomble-fight/internal/common"
+	"bomble-fight/internal/spec"
+	"io"
+	"net/http"
+	"strings"
+	"testing"
+
+	"github.com/unrolled/render"
+)
+
+func TestNewCombatantApi(t *testing.T) {
+	r := spec.NewMockRandom([]int{1})
+	storage := NewLocalCombatantStorage(r)
+	app := NewCombatantApplication(storage, r)
+	api := NewCombatantApi(app)
+
+	if api == nil {
+		t.Fatalf("NewCombatantApi() returned nil")
+	}
+
+	if api.application == nil {
+		t.Fatalf("Api object has no application")
+	}
+}
+
+func TestGenerateCombatantsEndpoint(t *testing.T) {
+	r := common.NewRandom()
+	storage := NewLocalCombatantStorage(r)
+	app := NewCombatantApplication(storage, r)
+	api := NewCombatantApi(app)
+
+	appEnv := common.AppEnv{
+		Render: render.New(),
+	}
+	response := spec.NewMockHttpResponseWriter()
+	req := &http.Request{
+		Body: io.NopCloser(strings.NewReader("2")),
+	}
+	api.GenerateCombatants(response, req, appEnv)
+
+	spec.ExpectEqualInts(t, 200, response.StatusCode, "Unexpected status code")
+	spec.ExpectEqualInts(t, 2, len(storage.combatants), "Unexpected stored combatant count")
+}
+
+func TestGenerateCombatantsEndpointWithInvalidBody(t *testing.T) {
+	r := common.NewRandom()
+	storage := NewLocalCombatantStorage(r)
+	app := NewCombatantApplication(storage, r)
+	api := NewCombatantApi(app)
+
+	appEnv := common.AppEnv{
+		Render: render.New(),
+	}
+	response := spec.NewMockHttpResponseWriter()
+	req := &http.Request{
+		Body: io.NopCloser(strings.NewReader("invalid")),
+	}
+	api.GenerateCombatants(response, req, appEnv)
+
+	spec.ExpectEqualInts(t, 400, response.StatusCode, "Unexpected status code")
+	spec.ExpectEqualInts(t, 0, len(storage.combatants), "Unexpected stored combatant count")
+}
