@@ -12,10 +12,8 @@ import (
 )
 
 func TestNewCombatantApi(t *testing.T) {
-	r := spec.NewMockRandom([]int{1})
-	storage := NewLocalCombatantStorage(r)
-	app := NewCombatantApplication(storage, r)
-	api := NewCombatantApi(app)
+	clearStorage()
+	api := NewCombatantApi()
 
 	if api == nil {
 		t.Fatalf("NewCombatantApi() returned nil")
@@ -27,10 +25,8 @@ func TestNewCombatantApi(t *testing.T) {
 }
 
 func TestGenerateCombatantsEndpoint(t *testing.T) {
-	r := common.NewRandom()
-	storage := NewLocalCombatantStorage(r)
-	app := NewCombatantApplication(storage, r)
-	api := NewCombatantApi(app)
+	clearStorage()
+	api := NewCombatantApi()
 
 	appEnv := common.AppEnv{
 		Render: render.New(),
@@ -46,10 +42,8 @@ func TestGenerateCombatantsEndpoint(t *testing.T) {
 }
 
 func TestGenerateCombatantsEndpointWithInvalidBody(t *testing.T) {
-	r := common.NewRandom()
-	storage := NewLocalCombatantStorage(r)
-	app := NewCombatantApplication(storage, r)
-	api := NewCombatantApi(app)
+	clearStorage()
+	api := NewCombatantApi()
 
 	appEnv := common.AppEnv{
 		Render: render.New(),

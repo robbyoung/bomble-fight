@@ -18,10 +18,6 @@ type Routes []Route
 
 var random = common.NewRandom()
 
-var combatantStorage = combatants.NewLocalCombatantStorage(random)
-var combatantApplication = combatants.NewCombatantApplication(combatantStorage, random)
-var combatantApi = combatants.NewCombatantApi(combatantApplication)
-
 var routes = Routes{
 	// Route{"Healthcheck", "GET", "/healthcheck", HealthcheckHandler},
 	// Route{"GetUserState", "GET", "/state/{id:.+}", GetUserStateHandler},
@@ -32,5 +28,5 @@ var routes = Routes{
 	// Route{"GetFightStep", "POST", "/fight", FightStepHandler},
 	// Route{"ResetFight", "POST", "/reset", ResetFightHandler},
 
-	Route{"GenerateCombatants", "POST", "/combatants", combatantApi.GenerateCombatants},
+	Route{"GenerateCombatants", "POST", "/combatants", combatants.NewCombatantApi().GenerateCombatants},
 }

@@ -12,9 +12,9 @@ type CombatantApi struct {
 	application ICombatantApplication
 }
 
-func NewCombatantApi(app ICombatantApplication) *CombatantApi {
+func NewCombatantApi() *CombatantApi {
 	return &CombatantApi{
-		application: app,
+		application: createApplication(),
 	}
 }
 
