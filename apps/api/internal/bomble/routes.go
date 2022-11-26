@@ -2,7 +2,6 @@ package bomble
 
 import (
 	"bomble-fight/internal/combatants"
-	"bomble-fight/internal/common"
 )
 
 // Route is the model for the router setup
@@ -16,8 +15,6 @@ type Route struct {
 // Routes are the main setup for our Router
 type Routes []Route
 
-var random = common.NewRandom()
-
 var routes = Routes{
 	// Route{"Healthcheck", "GET", "/healthcheck", HealthcheckHandler},
 	// Route{"GetUserState", "GET", "/state/{id:.+}", GetUserStateHandler},
@@ -28,5 +25,5 @@ var routes = Routes{
 	// Route{"GetFightStep", "POST", "/fight", FightStepHandler},
 	// Route{"ResetFight", "POST", "/reset", ResetFightHandler},
 
-	Route{"GenerateCombatants", "POST", "/combatants", combatants.NewCombatantApi().GenerateCombatants},
+	Route{"GenerateCombatants", "POST", "/combatants", combatants.Api().GenerateCombatants},
 }

@@ -13,10 +13,10 @@ import (
 
 func TestNewCombatantApi(t *testing.T) {
 	clearStorage()
-	api := NewCombatantApi()
+	api := Api()
 
 	if api == nil {
-		t.Fatalf("NewCombatantApi() returned nil")
+		t.Fatalf("Api() returned nil")
 	}
 
 	if api.application == nil {
@@ -24,9 +24,9 @@ func TestNewCombatantApi(t *testing.T) {
 	}
 }
 
-func TestGenerateCombatantsEndpoint(t *testing.T) {
+func TestGenerateCombatantsApiEndpoint(t *testing.T) {
 	clearStorage()
-	api := NewCombatantApi()
+	api := Api()
 
 	appEnv := common.AppEnv{
 		Render: render.New(),
@@ -41,9 +41,9 @@ func TestGenerateCombatantsEndpoint(t *testing.T) {
 	spec.ExpectEqualInts(t, 2, len(storage.combatants), "Unexpected stored combatant count")
 }
 
-func TestGenerateCombatantsEndpointWithInvalidBody(t *testing.T) {
+func TestGenerateCombatantsApiEndpointWithInvalidBody(t *testing.T) {
 	clearStorage()
-	api := NewCombatantApi()
+	api := Api()
 
 	appEnv := common.AppEnv{
 		Render: render.New(),
