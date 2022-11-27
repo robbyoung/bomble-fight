@@ -1,6 +1,7 @@
 package bomble
 
 import (
+	"bomble-fight/internal/common"
 	"log"
 
 	"github.com/gorilla/mux"
@@ -9,7 +10,7 @@ import (
 )
 
 // StartServer Wraps the mux Router and uses the Negroni Middleware
-func StartServer(appEnv AppEnv) {
+func StartServer(appEnv common.AppEnv) {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
 		handler := MakeHandler(appEnv, route.HandlerFunc)

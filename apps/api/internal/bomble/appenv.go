@@ -1,30 +1,20 @@
 package bomble
 
 import (
-	"bomble-fight/internal/bomble/models"
+	"bomble-fight/internal/common"
 
 	"github.com/unrolled/render"
 )
 
-// AppEnv holds application configuration data
-type AppEnv struct {
-	Render    *render.Render
-	Version   string
-	Env       string
-	Port      string
-	GameStore models.GameStorage
-}
-
 // CreateContextForTestSetup initialises an application context struct
 // for testing purposes
-func CreateContextForTestSetup() AppEnv {
+func CreateContextForTestSetup() common.AppEnv {
 	testVersion := "0.1.0"
-	appEnv := AppEnv{
-		Render:    render.New(),
-		Version:   testVersion,
-		Env:       "LOCAL",
-		Port:      "3001",
-		GameStore: NewGameService(),
+	appEnv := common.AppEnv{
+		Render:  render.New(),
+		Version: testVersion,
+		Env:     "LOCAL",
+		Port:    "3001",
 	}
 	return appEnv
 }

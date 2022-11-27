@@ -1,5 +1,9 @@
 package bomble
 
+import (
+	"bomble-fight/internal/combatants"
+)
+
 // Route is the model for the router setup
 type Route struct {
 	Name        string
@@ -12,12 +16,14 @@ type Route struct {
 type Routes []Route
 
 var routes = Routes{
-	Route{"Healthcheck", "GET", "/healthcheck", HealthcheckHandler},
-	Route{"GetUserState", "GET", "/state/{id:.+}", GetUserStateHandler},
-	Route{"AddPlayer", "POST", "/player", AddPlayerHandler},
-	Route{"AddBet", "POST", "/bet", AddBetHandler},
-	Route{"ListPlayers", "GET", "/players", ListPlayersHandler},
-	Route{"ListCombatants", "GET", "/combatants", ListCombatantsHandler},
-	Route{"GetFightStep", "POST", "/fight", FightStepHandler},
-	Route{"ResetFight", "POST", "/reset", ResetFightHandler},
+	// Route{"Healthcheck", "GET", "/healthcheck", HealthcheckHandler},
+	// Route{"GetUserState", "GET", "/state/{id:.+}", GetUserStateHandler},
+	// Route{"AddPlayer", "POST", "/player", AddPlayerHandler},
+	// Route{"AddBet", "POST", "/bet", AddBetHandler},
+	// Route{"ListPlayers", "GET", "/players", ListPlayersHandler},
+	// Route{"ListCombatants", "GET", "/combatants", ListCombatantsHandler},
+	// Route{"GetFightStep", "POST", "/fight", FightStepHandler},
+	// Route{"ResetFight", "POST", "/reset", ResetFightHandler},
+
+	Route{"GenerateCombatants", "POST", "/combatants", combatants.Api().GenerateCombatants},
 }
