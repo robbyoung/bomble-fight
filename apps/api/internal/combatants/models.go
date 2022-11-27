@@ -1,20 +1,6 @@
 package combatants
 
-type CombatantPersistedModel struct {
-	Id            string
-	Name          string
-	MaxHealth     int
-	CurrentHealth int
-	Streak        int
-
-	Ferocity  int
-	Agility   int
-	Endurance int
-	Skill     int
-	Speed     int
-}
-
-type Combatant = CombatantPersistedModel
+type Combatant = persistedModel
 
 type ActionCode int
 
@@ -28,7 +14,21 @@ const (
 	Killed   ActionCode = 6
 )
 
-type CombatantAction struct {
+type Action struct {
 	Code   ActionCode
 	Detail int
+}
+
+type persistedModel struct {
+	Id            string
+	Name          string
+	MaxHealth     int
+	CurrentHealth int
+	Streak        int
+
+	Ferocity  int
+	Agility   int
+	Endurance int
+	Skill     int
+	Speed     int
 }

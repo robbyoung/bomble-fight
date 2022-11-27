@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestNewCombatantService(t *testing.T) {
+func TestNewService(t *testing.T) {
 	clearStorage()
 	service := Service()
 

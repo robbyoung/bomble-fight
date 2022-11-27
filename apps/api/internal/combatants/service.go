@@ -1,15 +1,15 @@
 package combatants
 
-type CombatantService struct {
+type service struct {
 	application ICombatantApplication
 }
 
-func NewCombatantService(app *CombatantApplication) *CombatantService {
-	return &CombatantService{
+func newService(app *application) *service {
+	return &service{
 		application: app,
 	}
 }
 
-func (s *CombatantService) Fight(id1 string, id2 string) (*CombatantAction, *CombatantAction) {
+func (s *service) Fight(id1 string, id2 string) (*Action, *Action) {
 	return s.application.Fight(id1, id2)
 }

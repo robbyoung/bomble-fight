@@ -8,7 +8,7 @@ import (
 
 func TestNewLocalCombatantStorage(t *testing.T) {
 	r := common.NewRandom()
-	cs := NewLocalCombatantStorage(r)
+	cs := newLocalStorage(r)
 
 	if cs == nil {
 		t.Fatalf("NewLocalCombatantStorage() returned nil")
@@ -21,9 +21,9 @@ func TestNewLocalCombatantStorage(t *testing.T) {
 
 func TestCombatantStorageSaveAndLoad(t *testing.T) {
 	r := common.NewRandom()
-	cs := NewLocalCombatantStorage(r)
+	cs := newLocalStorage(r)
 
-	original := NewCombatantAggregate(r)
+	original := newAggregate(r)
 	original.Streak = 22
 
 	cs.SaveCombatant(original)

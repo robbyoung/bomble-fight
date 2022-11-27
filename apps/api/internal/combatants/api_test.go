@@ -11,7 +11,7 @@ import (
 	"github.com/unrolled/render"
 )
 
-func TestNewCombatantApi(t *testing.T) {
+func TestNewApi(t *testing.T) {
 	clearStorage()
 	api := Api()
 

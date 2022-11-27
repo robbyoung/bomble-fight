@@ -2,10 +2,10 @@ package combatants
 
 type ICombatantApplication interface {
 	GenerateCombatants(int) []*Combatant
-	Fight(string, string) (*CombatantAction, *CombatantAction)
+	Fight(string, string) (*Action, *Action)
 }
 
 type ICombatantStorage interface {
-	LoadCombatant(string) *CombatantAggregate
-	SaveCombatant(*CombatantAggregate)
+	LoadCombatant(string) *aggregate
+	SaveCombatant(*aggregate)
 }

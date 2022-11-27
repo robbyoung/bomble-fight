@@ -6,24 +6,24 @@ import (
 	"testing"
 )
 
-func TestNewCombatantApplication(t *testing.T) {
+func TestNewApplication(t *testing.T) {
 	r := spec.NewMockRandom([]int{1})
-	storage := NewLocalCombatantStorage(r)
-	app := NewCombatantApplication(storage, r)
+	storage := newLocalStorage(r)
+	app := newApplication(storage, r)
 
 	if app == nil {
-		t.Fatalf("NewCombatantApplication() returned nil")
+		t.Fatalf("NewApplication() returned nil")
 	}
 }
 
 func TestGenerateCombatants(t *testing.T) {
 	r := common.NewRandom()
-	storage := NewLocalCombatantStorage(r)
+	storage := newLocalStorage(r)
 
-	storage.SaveCombatant(NewCombatantAggregate(r))
-	storage.SaveCombatant(NewCombatantAggregate(r))
+	storage.SaveCombatant(newAggregate(r))
+	storage.SaveCombatant(newAggregate(r))
 
-	app := NewCombatantApplication(storage, r)
+	app := newApplication(storage, r)
 
 	result := app.GenerateCombatants(3)
 
@@ -40,14 +40,14 @@ func TestGenerateCombatants(t *testing.T) {
 
 func TestFight(t *testing.T) {
 	r := spec.NewMockRandom([]int{4, 4})
-	storage := NewLocalCombatantStorage(r)
+	storage := newLocalStorage(r)
 
-	c1 := NewCombatantAggregate(spec.NewMockRandom([]int{5}))
-	c2 := NewCombatantAggregate(spec.NewMockRandom([]int{3}))
+	c1 := newAggregate(spec.NewMockRandom([]int{5}))
+	c2 := newAggregate(spec.NewMockRandom([]int{3}))
 	storage.SaveCombatant(c1)
 	storage.SaveCombatant(c2)
 
-	app := NewCombatantApplication(storage, r)
+	app := newApplication(storage, r)
 	a1, a2 := app.Fight(c1.Id, c2.Id)
 
 	c2 = storage.LoadCombatant(c2.Id)

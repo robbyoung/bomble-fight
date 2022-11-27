@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-type CombatantAggregate struct {
+type aggregate struct {
 	rand common.IRandom
 
 	Id            string
@@ -35,11 +35,11 @@ var names = []string{
 	"Guy",
 }
 
-func NewCombatantAggregate(r common.IRandom) *CombatantAggregate {
+func newAggregate(r common.IRandom) *aggregate {
 	n := r.RandArrayEntry(names)
 	id := fmt.Sprintf("%s_%d", n, r.RandInt(100, 900))
 
-	agg := CombatantAggregate{
+	agg := aggregate{
 		rand: r,
 
 		Id:            strings.ToLower(id),
@@ -58,49 +58,49 @@ func NewCombatantAggregate(r common.IRandom) *CombatantAggregate {
 	return &agg
 }
 
-func (combatant *CombatantAggregate) Initiate() *CombatantAction {
+func (combatant *aggregate) Initiate() *Action {
 	damage := combatant.Ferocity
 
 	if combatant.rollForAbility(combatant.Skill) {
-		return &CombatantAction{
+		return &Action{
 			Code:   Critical,
 			Detail: damage * 2,
 		}
 	}
 
-	return &CombatantAction{
+	return &Action{
 		Code:   Attack,
 		Detail: damage,
 	}
 }
 
-func (combatant *CombatantAggregate) Respond(action *CombatantAction) *CombatantAction {
+func (combatant *aggregate) Respond(action *Action) *Action {
 	switch action.Code {
 	case Attack:
 		return combatant.respondToAttack(action.Detail)
 	case Critical:
 		return combatant.respondToAttack(action.Detail)
 	default:
-		return &CombatantAction{
+		return &Action{
 			Code: Idle,
 		}
 	}
 }
 
-func (combatant *CombatantAggregate) Victory() {
+func (combatant *aggregate) Victory() {
 	combatant.CurrentHealth = combatant.MaxHealth
 	combatant.Streak++
 }
 
-func (combatant *CombatantAggregate) respondToAttack(damage int) *CombatantAction {
+func (combatant *aggregate) respondToAttack(damage int) *Action {
 	if combatant.rollForAbility(combatant.Agility) {
-		return &CombatantAction{
+		return &Action{
 			Code: Dodge,
 		}
 	}
 
 	if combatant.rollForAbility(combatant.Endurance) {
-		return &CombatantAction{
+		return &Action{
 			Code: Block,
 		}
 	}
@@ -109,24 +109,24 @@ func (combatant *CombatantAggregate) respondToAttack(damage int) *CombatantActio
 
 	if combatant.CurrentHealth <= 0 {
 		combatant.CurrentHealth = 0
-		return &CombatantAction{
+		return &Action{
 			Code: Killed,
 		}
 	}
 
-	return &CombatantAction{
+	return &Action{
 		Code: Hit,
 	}
 }
 
-func (combatant *CombatantAggregate) rollForAbility(threshold int) bool {
+func (combatant *aggregate) rollForAbility(threshold int) bool {
 	roll := combatant.rand.RandInt(0, 10)
 
 	return roll <= threshold
 }
 
-func FromPersistence(model *CombatantPersistedModel, r common.IRandom) *CombatantAggregate {
-	return &CombatantAggregate{
+func fromPersistence(model *persistedModel, r common.IRandom) *aggregate {
+	return &aggregate{
 		rand:          r,
 		Id:            model.Id,
 		Name:          model.Name,
@@ -141,8 +141,8 @@ func FromPersistence(model *CombatantPersistedModel, r common.IRandom) *Combatan
 	}
 }
 
-func (combatant *CombatantAggregate) ToPersistence() *CombatantPersistedModel {
-	return &CombatantPersistedModel{
+func (combatant *aggregate) ToPersistence() *persistedModel {
+	return &persistedModel{
 		Id:            combatant.Id,
 		Name:          combatant.Name,
 		MaxHealth:     combatant.MaxHealth,
