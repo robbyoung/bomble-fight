@@ -13,17 +13,21 @@ func TestNewAggregate(t *testing.T) {
 		t.Fatalf("NewAggregate() returned nil")
 	}
 
+	if len(agg.Id) != 36 {
+		t.Fatalf("Aggregate ID has unexpected value %s", agg.Id)
+	}
+
 	spec.ExpectEqualStrings(t, "Otto", agg.Name, "Unexpected name value")
 
-	spec.ExpectEqualInts(t, 4, agg.Ferocity, "Unexpected ferocity value")
-	spec.ExpectEqualInts(t, 2, agg.Endurance, "Unexpected endurance value")
-	spec.ExpectEqualInts(t, 3, agg.Skill, "Unexpected skill value")
-	spec.ExpectEqualInts(t, 4, agg.Agility, "Unexpected agility value")
-	spec.ExpectEqualInts(t, 2, agg.Speed, "Unexpected speed value")
+	spec.ExpectEqualInts(t, 3, agg.Ferocity, "Unexpected ferocity value")
+	spec.ExpectEqualInts(t, 4, agg.Endurance, "Unexpected endurance value")
+	spec.ExpectEqualInts(t, 2, agg.Skill, "Unexpected skill value")
+	spec.ExpectEqualInts(t, 3, agg.Agility, "Unexpected agility value")
+	spec.ExpectEqualInts(t, 4, agg.Speed, "Unexpected speed value")
 }
 
 func TestInitiateWithAttack(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 5, 4})
+	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 5, 4})
 	agg := newAggregate(r)
 
 	response := agg.Initiate()
@@ -33,7 +37,7 @@ func TestInitiateWithAttack(t *testing.T) {
 }
 
 func TestInitiateWithCriticalAttack(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 3, 2, 2, 2, 2, 1, 4})
+	r := spec.NewMockRandom([]int{1, 3, 2, 2, 2, 2, 1, 4})
 	agg := newAggregate(r)
 
 	response := agg.Initiate()
@@ -43,7 +47,7 @@ func TestInitiateWithCriticalAttack(t *testing.T) {
 }
 
 func TestRespondToAttackWithDodge(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 1, 8})
+	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 1, 8})
 	agg := newAggregate(r)
 
 	action := &Action{
@@ -57,7 +61,7 @@ func TestRespondToAttackWithDodge(t *testing.T) {
 }
 
 func TestRespondToAttackWithBlock(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 8, 1})
+	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 1})
 	agg := newAggregate(r)
 
 	action := &Action{
@@ -71,7 +75,7 @@ func TestRespondToAttackWithBlock(t *testing.T) {
 }
 
 func TestRespondToAttackWithHit(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 8, 8})
+	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 8})
 	agg := newAggregate(r)
 
 	action := &Action{
@@ -85,7 +89,7 @@ func TestRespondToAttackWithHit(t *testing.T) {
 }
 
 func TestRespondToCriticalAttackWithHit(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 8, 8})
+	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 8})
 	agg := newAggregate(r)
 
 	action := &Action{
@@ -99,7 +103,7 @@ func TestRespondToCriticalAttackWithHit(t *testing.T) {
 }
 
 func TestRespondToAttackWithKilled(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 8, 8})
+	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 8})
 	agg := newAggregate(r)
 
 	action := &Action{
@@ -113,7 +117,7 @@ func TestRespondToAttackWithKilled(t *testing.T) {
 }
 
 func TestRespondToCriticalWithKilled(t *testing.T) {
-	r := spec.NewMockRandom([]int{1, 1, 2, 2, 2, 2, 2, 8, 8})
+	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 8})
 	agg := newAggregate(r)
 
 	action := &Action{
