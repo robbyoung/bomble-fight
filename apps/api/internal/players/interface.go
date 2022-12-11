@@ -4,6 +4,6 @@ type IPlayerApplication interface {
 }
 
 type IPlayerStorage interface {
-	LoadCombatant(string) *aggregate
-	SaveCombatant(*aggregate)
+	LoadPlayer(string) *aggregate
+	SavePlayer(*aggregate)
 }
