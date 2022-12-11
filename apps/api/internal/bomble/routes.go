@@ -2,6 +2,7 @@ package bomble
 
 import (
 	"bomble-fight/internal/combatants"
+	"bomble-fight/internal/players"
 )
 
 // Route is the model for the router setup
@@ -26,4 +27,5 @@ var routes = Routes{
 	// Route{"ResetFight", "POST", "/reset", ResetFightHandler},
 
 	Route{"GenerateCombatants", "POST", "/combatants", combatants.Api().GenerateCombatants},
+	Route{"CreatePlayer", "POST", "/players", players.Api().CreatePlayer},
 }

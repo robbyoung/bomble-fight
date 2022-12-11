@@ -18,10 +18,10 @@ func TestCreatePlayer(t *testing.T) {
 	storage := newLocalStorage()
 	app := newApplication(storage)
 
-	p := app.createPlayer("aname")
+	p := app.CreatePlayer("aname")
 
 	if storage.LoadPlayer(p.Id) == nil {
-		t.Fatalf("createPlayer() didn't save player")
+		t.Fatalf("CreatePlayer() didn't save player")
 	}
 
 	spec.ExpectEqualStrings(t, p.Name, "aname", "New player has unexpected name")

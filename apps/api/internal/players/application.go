@@ -8,7 +8,7 @@ func newApplication(storage IPlayerStorage) *application {
 	return &application{storage: storage}
 }
 
-func (app *application) createPlayer(name string) *Player {
+func (app *application) CreatePlayer(name string) *Player {
 	p := newAggregate(name)
 	app.storage.SavePlayer(p)
 
