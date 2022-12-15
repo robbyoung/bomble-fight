@@ -32,7 +32,16 @@ func (a *api) CreatePlayer(w http.ResponseWriter, req *http.Request, appEnv comm
 		return
 	}
 
-	result := a.application.CreatePlayer(body.Name)
+	result, err := a.application.CreatePlayer(body.Name)
+
+	if err != nil {
+		response := status.Response{
+			Status:  strconv.Itoa(http.StatusBadRequest),
+			Message: err.Error(),
+		}
+		appEnv.Render.JSON(w, http.StatusBadRequest, response)
+		return
+	}
 
 	responseObject := make(map[string]interface{})
 	responseObject["combatants"] = result

@@ -57,3 +57,21 @@ func TestCreatePlayerApiEndpointWithInvalidBody(t *testing.T) {
 	spec.ExpectEqualInts(t, 400, response.StatusCode, "Unexpected status code")
 	spec.ExpectEqualInts(t, 0, len(storage.players), "Unexpected stored combatant count")
 }
+
+func TestCreatePlayerApiEndpointWithEmptyName(t *testing.T) {
+	clearStorage()
+	api := Api()
+
+	appEnv := common.AppEnv{
+		Render: render.New(),
+	}
+	response := spec.NewMockHttpResponseWriter()
+	req := &http.Request{
+		Body: io.NopCloser(strings.NewReader("{\"Name\":\"\"}")),
+	}
+	api.CreatePlayer(response, req, appEnv)
+
+	spec.ExpectEqualInts(t, 400, response.StatusCode, "Unexpected status code")
+	spec.ExpectIncludedString(t, "Player name can't be empty", response.Text, "Unexpected response text")
+	spec.ExpectEqualInts(t, 0, len(storage.players), "Unexpected stored combatant count")
+}

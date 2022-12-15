@@ -1,7 +1,7 @@
 package players
 
 type IPlayerApplication interface {
-	CreatePlayer(string) *Player
+	CreatePlayer(string) (*Player, error)
 }
 
 type IPlayerStorage interface {
