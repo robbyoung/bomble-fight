@@ -1,7 +1,14 @@
 package players
 
 import (
+	"bomble-fight/internal/common"
+	"bomble-fight/internal/spec"
+	"io"
+	"net/http"
+	"strings"
 	"testing"
+
+	"github.com/unrolled/render"
 )
 
 func TestNewApi(t *testing.T) {
@@ -15,4 +22,38 @@ func TestNewApi(t *testing.T) {
 	if api.application == nil {
 		t.Fatalf("Api object has no application")
 	}
+}
+
+func TestCreatePlayerApiEndpoint(t *testing.T) {
+	clearStorage()
+	api := Api()
+
+	appEnv := common.AppEnv{
+		Render: render.New(),
+	}
+	response := spec.NewMockHttpResponseWriter()
+	req := &http.Request{
+		Body: io.NopCloser(strings.NewReader("{\"Name\":\"Percy\"}")),
+	}
+	api.CreatePlayer(response, req, appEnv)
+
+	spec.ExpectEqualInts(t, 200, response.StatusCode, "Unexpected status code")
+	spec.ExpectEqualInts(t, 1, len(storage.players), "Unexpected stored combatant count")
+}
+
+func TestCreatePlayerApiEndpointWithInvalidBody(t *testing.T) {
+	clearStorage()
+	api := Api()
+
+	appEnv := common.AppEnv{
+		Render: render.New(),
+	}
+	response := spec.NewMockHttpResponseWriter()
+	req := &http.Request{
+		Body: io.NopCloser(strings.NewReader("{\"Name\":8}")),
+	}
+	api.CreatePlayer(response, req, appEnv)
+
+	spec.ExpectEqualInts(t, 400, response.StatusCode, "Unexpected status code")
+	spec.ExpectEqualInts(t, 0, len(storage.players), "Unexpected stored combatant count")
 }

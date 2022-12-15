@@ -19,9 +19,9 @@ func newApi(app *application) *api {
 }
 
 func (a *api) GenerateCombatants(w http.ResponseWriter, req *http.Request, appEnv common.AppEnv) {
-	var count int
+	var requestBody generateCombatantsRequest
 	decoder := json.NewDecoder(req.Body)
-	err := decoder.Decode(&count)
+	err := decoder.Decode(&requestBody)
 
 	if err != nil {
 		response := status.Response{
@@ -32,7 +32,7 @@ func (a *api) GenerateCombatants(w http.ResponseWriter, req *http.Request, appEn
 		return
 	}
 
-	result := a.application.GenerateCombatants(count)
+	result := a.application.GenerateCombatants(requestBody.Count)
 
 	responseObject := make(map[string]interface{})
 	responseObject["combatants"] = result

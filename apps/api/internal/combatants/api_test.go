@@ -33,7 +33,7 @@ func TestGenerateCombatantsApiEndpoint(t *testing.T) {
 	}
 	response := spec.NewMockHttpResponseWriter()
 	req := &http.Request{
-		Body: io.NopCloser(strings.NewReader("2")),
+		Body: io.NopCloser(strings.NewReader("{\"Count\":2}")),
 	}
 	api.GenerateCombatants(response, req, appEnv)
 
@@ -50,7 +50,7 @@ func TestGenerateCombatantsApiEndpointWithInvalidBody(t *testing.T) {
 	}
 	response := spec.NewMockHttpResponseWriter()
 	req := &http.Request{
-		Body: io.NopCloser(strings.NewReader("invalid")),
+		Body: io.NopCloser(strings.NewReader("{\"Count\":\"invalid\"}")),
 	}
 	api.GenerateCombatants(response, req, appEnv)
 

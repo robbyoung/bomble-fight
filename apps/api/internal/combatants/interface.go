@@ -9,3 +9,7 @@ type ICombatantStorage interface {
 	LoadCombatant(string) *aggregate
 	SaveCombatant(*aggregate)
 }
+
+type generateCombatantsRequest struct {
+	Count int
+}
