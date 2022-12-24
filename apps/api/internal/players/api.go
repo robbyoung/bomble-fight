@@ -1,4 +1,4 @@
-package combatants
+package players
 
 import (
 	"bomble-fight/internal/common"
@@ -9,7 +9,7 @@ import (
 )
 
 type api struct {
-	application ICombatantApplication
+	application IPlayerApplication
 }
 
 func newApi(app *application) *api {
@@ -18,10 +18,10 @@ func newApi(app *application) *api {
 	}
 }
 
-func (a *api) GenerateCombatants(w http.ResponseWriter, req *http.Request, appEnv common.AppEnv) {
-	var requestBody generateCombatantsRequest
+func (a *api) CreatePlayer(w http.ResponseWriter, req *http.Request, appEnv common.AppEnv) {
+	var body createPlayerRequest
 	decoder := json.NewDecoder(req.Body)
-	err := decoder.Decode(&requestBody)
+	err := decoder.Decode(&body)
 
 	if err != nil {
 		response := status.Response{
@@ -32,7 +32,16 @@ func (a *api) GenerateCombatants(w http.ResponseWriter, req *http.Request, appEn
 		return
 	}
 
-	result := a.application.GenerateCombatants(requestBody.Count)
+	result, err := a.application.CreatePlayer(body.Name)
+
+	if err != nil {
+		response := status.Response{
+			Status:  strconv.Itoa(http.StatusBadRequest),
+			Message: err.Error(),
+		}
+		appEnv.Render.JSON(w, http.StatusBadRequest, response)
+		return
+	}
 
 	responseObject := make(map[string]interface{})
 	responseObject["combatants"] = result

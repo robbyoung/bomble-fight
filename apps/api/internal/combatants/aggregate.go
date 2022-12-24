@@ -2,8 +2,8 @@ package combatants
 
 import (
 	"bomble-fight/internal/common"
-	"fmt"
-	"strings"
+
+	"github.com/google/uuid"
 )
 
 type aggregate struct {
@@ -36,14 +36,11 @@ var names = []string{
 }
 
 func newAggregate(r common.IRandom) *aggregate {
-	n := r.RandArrayEntry(names)
-	id := fmt.Sprintf("%s_%d", n, r.RandInt(100, 900))
-
-	agg := aggregate{
+	return &aggregate{
 		rand: r,
 
-		Id:            strings.ToLower(id),
-		Name:          n,
+		Id:            uuid.New().String(),
+		Name:          r.RandArrayEntry(names),
 		MaxHealth:     50,
 		CurrentHealth: 50,
 		Streak:        0,
@@ -54,8 +51,6 @@ func newAggregate(r common.IRandom) *aggregate {
 		Agility:   r.RandInt(0, 10),
 		Speed:     r.RandInt(0, 10),
 	}
-
-	return &agg
 }
 
 func (combatant *aggregate) Initiate() *Action {

@@ -3,10 +3,11 @@ module bomble-fight
 go 1.15
 
 require (
+	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.8.0
 	github.com/palantir/stacktrace v0.0.0-20161112013806-78658fd2d177
 	github.com/sirupsen/logrus v1.7.0
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/unrolled/render v1.0.3
 	github.com/unrolled/secure v1.0.8
 	github.com/urfave/negroni v1.0.0

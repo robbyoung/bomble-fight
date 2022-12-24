@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestNewLocalCombatantStorage(t *testing.T) {
+func TestStorage_New(t *testing.T) {
 	r := common.NewRandom()
 	cs := newLocalStorage(r)
 
@@ -19,7 +19,7 @@ func TestNewLocalCombatantStorage(t *testing.T) {
 	}
 }
 
-func TestCombatantStorageSaveAndLoad(t *testing.T) {
+func TestStorage_SaveAndLoad(t *testing.T) {
 	r := common.NewRandom()
 	cs := newLocalStorage(r)
 
