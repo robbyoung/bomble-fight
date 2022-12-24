@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewAggregate(t *testing.T) {
+func TestAggregate_New(t *testing.T) {
 	r := spec.NewMockRandom([]int{2, 3, 4})
 	agg := newAggregate(r)
 
@@ -26,7 +26,7 @@ func TestNewAggregate(t *testing.T) {
 	spec.ExpectEqualInts(t, 4, agg.Speed, "Unexpected speed value")
 }
 
-func TestInitiateWithAttack(t *testing.T) {
+func TestAggregate_Initiate_Attack(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 5, 4})
 	agg := newAggregate(r)
 
@@ -36,7 +36,7 @@ func TestInitiateWithAttack(t *testing.T) {
 	spec.ExpectEqualInts(t, 2, response.Detail, "Unexpected action detail")
 }
 
-func TestInitiateWithCriticalAttack(t *testing.T) {
+func TestAggregate_Initiate_Critical(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 3, 2, 2, 2, 2, 1, 4})
 	agg := newAggregate(r)
 
@@ -46,7 +46,7 @@ func TestInitiateWithCriticalAttack(t *testing.T) {
 	spec.ExpectEqualInts(t, 6, response.Detail, "Unexpected action detail")
 }
 
-func TestRespondToAttackWithDodge(t *testing.T) {
+func TestAggregate_Respond_DodgeAttack(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 1, 8})
 	agg := newAggregate(r)
 
@@ -60,7 +60,7 @@ func TestRespondToAttackWithDodge(t *testing.T) {
 	spec.ExpectEqualInts(t, 50, agg.CurrentHealth, "Unexpected health value")
 }
 
-func TestRespondToAttackWithBlock(t *testing.T) {
+func TestAggregate_Respond_BlockAttack(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 1})
 	agg := newAggregate(r)
 
@@ -74,7 +74,7 @@ func TestRespondToAttackWithBlock(t *testing.T) {
 	spec.ExpectEqualInts(t, 50, agg.CurrentHealth, "Unexpected health value")
 }
 
-func TestRespondToAttackWithHit(t *testing.T) {
+func TestAggregate_Respond_HitByAttack(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 8})
 	agg := newAggregate(r)
 
@@ -88,7 +88,7 @@ func TestRespondToAttackWithHit(t *testing.T) {
 	spec.ExpectEqualInts(t, 40, agg.CurrentHealth, "Unexpected health value")
 }
 
-func TestRespondToCriticalAttackWithHit(t *testing.T) {
+func TestAggregate_Respond_HitByCritical(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 8})
 	agg := newAggregate(r)
 
@@ -102,7 +102,7 @@ func TestRespondToCriticalAttackWithHit(t *testing.T) {
 	spec.ExpectEqualInts(t, 30, agg.CurrentHealth, "Unexpected health value")
 }
 
-func TestRespondToAttackWithKilled(t *testing.T) {
+func TestAggregate_Respond_KilledByAttack(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 8})
 	agg := newAggregate(r)
 
@@ -116,7 +116,7 @@ func TestRespondToAttackWithKilled(t *testing.T) {
 	spec.ExpectEqualInts(t, 0, agg.CurrentHealth, "Unexpected health value")
 }
 
-func TestRespondToCriticalWithKilled(t *testing.T) {
+func TestAggregate_Respond_KilledByCritical(t *testing.T) {
 	r := spec.NewMockRandom([]int{1, 2, 2, 2, 2, 2, 8, 8})
 	agg := newAggregate(r)
 
@@ -130,7 +130,7 @@ func TestRespondToCriticalWithKilled(t *testing.T) {
 	spec.ExpectEqualInts(t, 0, agg.CurrentHealth, "Unexpected health value")
 }
 
-func TestVictory(t *testing.T) {
+func TestAggregate_Victory(t *testing.T) {
 	r := spec.NewMockRandom([]int{5})
 	agg := newAggregate(r)
 

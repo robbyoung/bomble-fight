@@ -11,7 +11,7 @@ import (
 	"github.com/unrolled/render"
 )
 
-func TestNewApi(t *testing.T) {
+func TestApi_New(t *testing.T) {
 	clearStorage()
 	api := Api()
 
@@ -24,7 +24,7 @@ func TestNewApi(t *testing.T) {
 	}
 }
 
-func TestGenerateCombatantsApiEndpoint(t *testing.T) {
+func TestApi_GenerateCombatants(t *testing.T) {
 	clearStorage()
 	api := Api()
 
@@ -41,7 +41,7 @@ func TestGenerateCombatantsApiEndpoint(t *testing.T) {
 	spec.ExpectEqualInts(t, 2, len(storage.combatants), "Unexpected stored combatant count")
 }
 
-func TestGenerateCombatantsApiEndpointWithInvalidBody(t *testing.T) {
+func TestApi_GenerateCombatants_InvalidBody(t *testing.T) {
 	clearStorage()
 	api := Api()
 

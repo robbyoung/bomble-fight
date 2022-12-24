@@ -31,7 +31,7 @@ func TestService_CreatePlayer(t *testing.T) {
 	spec.ExpectEqualStrings(t, "aname", p.Name, "Created player had unexpected name")
 }
 
-func TestService_CreatePlayerWithEmptyName(t *testing.T) {
+func TestService_CreatePlayer_EmptyName(t *testing.T) {
 	clearStorage()
 	service := Service()
 

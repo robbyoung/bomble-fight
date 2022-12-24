@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestNewApplication(t *testing.T) {
+func TestApplication_New(t *testing.T) {
 	r := spec.NewMockRandom([]int{1})
 	storage := newLocalStorage(r)
 	app := newApplication(storage, r)
@@ -16,7 +16,7 @@ func TestNewApplication(t *testing.T) {
 	}
 }
 
-func TestGenerateCombatants(t *testing.T) {
+func TestApplication_GenerateCombatants(t *testing.T) {
 	r := common.NewRandom()
 	storage := newLocalStorage(r)
 
@@ -38,7 +38,7 @@ func TestGenerateCombatants(t *testing.T) {
 	spec.ExpectEqualInts(t, 5, len(storage.combatants), "Unexpected stored combatants count")
 }
 
-func TestFight(t *testing.T) {
+func TestApplication_Fight(t *testing.T) {
 	r := spec.NewMockRandom([]int{4, 4})
 	storage := newLocalStorage(r)
 
@@ -61,5 +61,4 @@ func TestFight(t *testing.T) {
 	}
 
 	spec.ExpectEqualInts(t, 40, c2.CurrentHealth, "Unexpected combatant 2 health")
-
 }

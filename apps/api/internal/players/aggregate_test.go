@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewAggregate(t *testing.T) {
+func TestAggregate_New(t *testing.T) {
 	agg := newAggregate("aname")
 
 	if agg == nil {
@@ -20,7 +20,7 @@ func TestNewAggregate(t *testing.T) {
 	spec.ExpectEqualInts(t, 100, agg.Money, "Unexpected money value")
 }
 
-func TestPersistence(t *testing.T) {
+func TestAggregate_Persistence(t *testing.T) {
 	orig := newAggregate("aname")
 	orig.Money = 250
 

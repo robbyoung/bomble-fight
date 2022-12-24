@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewApplication(t *testing.T) {
+func TestApplication_New(t *testing.T) {
 	storage := newLocalStorage()
 	app := newApplication(storage)
 
@@ -14,7 +14,7 @@ func TestNewApplication(t *testing.T) {
 	}
 }
 
-func TestCreatePlayer(t *testing.T) {
+func TestApplication_CreatePlayer(t *testing.T) {
 	storage := newLocalStorage()
 	app := newApplication(storage)
 
@@ -31,7 +31,7 @@ func TestCreatePlayer(t *testing.T) {
 	spec.ExpectEqualStrings(t, p.Name, "aname", "New player has unexpected name")
 }
 
-func TestCreatePlayerWithEmptyName(t *testing.T) {
+func TestApplication_CreatePlayer_EmptyName(t *testing.T) {
 	storage := newLocalStorage()
 	app := newApplication(storage)
 

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewLocalPlayerStorage(t *testing.T) {
+func TestStorage_New(t *testing.T) {
 	cs := newLocalStorage()
 
 	if cs == nil {
@@ -17,7 +17,7 @@ func TestNewLocalPlayerStorage(t *testing.T) {
 	}
 }
 
-func TestPlayerStorageSaveAndLoad(t *testing.T) {
+func TestStorage_SaveAndLoad(t *testing.T) {
 	cs := newLocalStorage()
 
 	original := newAggregate("aname")
