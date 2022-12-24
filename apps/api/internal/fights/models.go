@@ -8,3 +8,11 @@ const (
 	Active   FightStatusCode = 2
 	Finished FightStatusCode = 3
 )
+
+type persistedModel struct {
+	Id           string
+	Bets         map[string]*bet
+	Players      map[string]bool
+	CombatantIds []string
+	Status       FightStatusCode
+}

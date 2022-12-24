@@ -1,8 +1,13 @@
 package fights
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/google/uuid"
+)
 
 type aggregate struct {
+	id           string
 	bets         map[string]*bet
 	players      map[string]bool
 	combatantIds []string
@@ -22,6 +27,7 @@ func newAggregate(playerIds []string, combatantIds []string) *aggregate {
 	}
 
 	return &aggregate{
+		id:           uuid.New().String(),
 		bets:         make(map[string]*bet),
 		players:      players,
 		combatantIds: combatantIds,
@@ -76,4 +82,22 @@ func (agg *aggregate) ContainsCombatant(id string) bool {
 		}
 	}
 	return false
+}
+
+func (agg *aggregate) toPersistence() *persistedModel {
+	return &persistedModel{
+		Id:           agg.id,
+		Bets:         agg.bets,
+		Players:      agg.players,
+		CombatantIds: agg.combatantIds,
+	}
+}
+
+func fromPersistence(model *persistedModel) *aggregate {
+	return &aggregate{
+		id:           model.Id,
+		bets:         model.Bets,
+		players:      model.Players,
+		combatantIds: model.CombatantIds,
+	}
 }
