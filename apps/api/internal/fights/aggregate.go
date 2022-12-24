@@ -55,6 +55,10 @@ func (agg *aggregate) AddBet(playerId string, combatantId string, amount int) er
 	return nil
 }
 
+func (agg *aggregate) GetBet(playerId string) bet {
+	return *agg.bets[playerId]
+}
+
 func (agg *aggregate) ContainsBet(playerId string) bool {
 	_, exists := agg.bets[playerId]
 	return exists
