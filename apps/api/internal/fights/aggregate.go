@@ -3,8 +3,8 @@ package fights
 import "errors"
 
 type aggregate struct {
-	bets         []bet
-	playerIds    []string
+	bets         map[string]*bet
+	players      map[string]bool
 	combatantIds []string
 	status       FightStatusCode
 }
@@ -15,11 +15,16 @@ type bet struct {
 	Amount      int
 }
 
-func newAggregate(players []string, combatants []string) *aggregate {
+func newAggregate(playerIds []string, combatantIds []string) *aggregate {
+	players := make(map[string]bool)
+	for _, id := range playerIds {
+		players[id] = false
+	}
+
 	return &aggregate{
-		bets:         make([]bet, 0),
-		playerIds:    players,
-		combatantIds: combatants,
+		bets:         make(map[string]*bet),
+		players:      players,
+		combatantIds: combatantIds,
 		status:       Pending,
 	}
 }
@@ -33,26 +38,31 @@ func (agg *aggregate) AddBet(playerId string, combatantId string, amount int) er
 		return errors.New("no record of specified combatant")
 	}
 
+	if agg.ContainsBet(playerId) {
+		return errors.New("player already has placed a bet")
+	}
+
 	if amount <= 0 {
 		return errors.New("bet amount must be greater than 0")
 	}
 
-	b := bet{
+	b := &bet{
 		PlayerId:    playerId,
 		CombatantId: combatantId,
 		Amount:      amount,
 	}
-	agg.bets = append(agg.bets, b)
+	agg.bets[playerId] = b
 	return nil
 }
 
+func (agg *aggregate) ContainsBet(playerId string) bool {
+	_, exists := agg.bets[playerId]
+	return exists
+}
+
 func (agg *aggregate) ContainsPlayer(id string) bool {
-	for _, p := range agg.playerIds {
-		if p == id {
-			return true
-		}
-	}
-	return false
+	_, exists := agg.players[id]
+	return exists
 }
 
 func (agg *aggregate) ContainsCombatant(id string) bool {
