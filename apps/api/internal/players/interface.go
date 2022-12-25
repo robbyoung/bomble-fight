@@ -1,5 +1,9 @@
 package players
 
+type IPlayerService interface {
+	CreatePlayer(string) (*Player, error)
+}
+
 type IPlayerApplication interface {
 	CreatePlayer(string) (*Player, error)
 }
