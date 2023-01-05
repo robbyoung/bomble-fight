@@ -22,7 +22,7 @@ func TestService_CreatePlayer(t *testing.T) {
 	clearStorage()
 	service := Service()
 
-	p, err := service.application.CreatePlayer("aname")
+	p, err := service.CreatePlayer("aname")
 
 	if err != nil {
 		t.Fatalf("Unexpected error from CreatePlayer()")
@@ -35,7 +35,7 @@ func TestService_CreatePlayer_EmptyName(t *testing.T) {
 	clearStorage()
 	service := Service()
 
-	p, err := service.application.CreatePlayer("")
+	p, err := service.CreatePlayer("")
 
 	if err == nil {
 		t.Fatalf("Expected error from CreatePlayer(), received none")
@@ -43,5 +43,18 @@ func TestService_CreatePlayer_EmptyName(t *testing.T) {
 
 	if p != nil {
 		t.Fatalf("Expected player object to be nil")
+	}
+}
+
+func TestService_GetPlayer(t *testing.T) {
+	clearStorage()
+	service := Service()
+
+	created, _ := service.CreatePlayer("aname")
+
+	p := service.GetPlayer(created.Id)
+
+	if p == nil {
+		t.Fatalf("Unexpected nil from GetPlayer()")
 	}
 }

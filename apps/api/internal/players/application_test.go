@@ -45,3 +45,31 @@ func TestApplication_CreatePlayer_EmptyName(t *testing.T) {
 		t.Fatalf("CreatePlayer() retured an unexpected player")
 	}
 }
+
+func TestApplication_GetPlayer(t *testing.T) {
+	storage := newLocalStorage()
+	app := newApplication(storage)
+
+	created, _ := app.CreatePlayer("aplayername")
+
+	p := app.GetPlayer(created.Id)
+
+	if p == nil {
+		t.Fatalf("Unexpected nil from GetPlayer()")
+	}
+
+	spec.ExpectEqualStrings(t, "aplayername", p.Name, "Expected player names to match")
+}
+
+func TestApplication_GetPlayer_Nonexistent(t *testing.T) {
+	storage := newLocalStorage()
+	app := newApplication(storage)
+
+	app.CreatePlayer("aplayername")
+
+	p := app.GetPlayer("aninvalidguid")
+
+	if p != nil {
+		t.Fatalf("Unexpected player reference from GetPlayer()")
+	}
+}

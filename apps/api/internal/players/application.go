@@ -21,6 +21,16 @@ func (app *application) CreatePlayer(name string) (*Player, error) {
 	return convertToPlayerModel(p), nil
 }
 
+func (app *application) GetPlayer(id string) *Player {
+	loaded := app.storage.LoadPlayer(id)
+
+	if loaded != nil {
+		return convertToPlayerModel(loaded)
+	}
+
+	return nil
+}
+
 func convertToPlayerModel(p *aggregate) *Player {
 	return p.toPersistence()
 }

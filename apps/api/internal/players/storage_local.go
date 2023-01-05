@@ -11,7 +11,13 @@ func newLocalStorage() *localStorage {
 }
 
 func (storage *localStorage) LoadPlayer(id string) *aggregate {
-	return fromPersistence(storage.players[id])
+	p, ok := storage.players[id]
+
+	if ok {
+		return fromPersistence(p)
+	}
+
+	return nil
 }
 
 func (storage *localStorage) SavePlayer(player *aggregate) {

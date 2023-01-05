@@ -13,3 +13,7 @@ func newService(app *application) *service {
 func (s *service) CreatePlayer(name string) (*Player, error) {
 	return s.application.CreatePlayer(name)
 }
+
+func (s *service) GetPlayer(id string) *Player {
+	return s.application.GetPlayer(id)
+}
