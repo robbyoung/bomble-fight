@@ -6,7 +6,6 @@ import (
 )
 
 func TestService_New(t *testing.T) {
-	clearStorage()
 	service := Service()
 
 	if service == nil {
@@ -19,8 +18,7 @@ func TestService_New(t *testing.T) {
 }
 
 func TestService_CreatePlayer(t *testing.T) {
-	clearStorage()
-	service := Service()
+	service := TestService()
 
 	p, err := service.CreatePlayer("aname")
 
@@ -32,8 +30,7 @@ func TestService_CreatePlayer(t *testing.T) {
 }
 
 func TestService_CreatePlayer_EmptyName(t *testing.T) {
-	clearStorage()
-	service := Service()
+	service := TestService()
 
 	p, err := service.CreatePlayer("")
 
@@ -47,8 +44,7 @@ func TestService_CreatePlayer_EmptyName(t *testing.T) {
 }
 
 func TestService_GetPlayer(t *testing.T) {
-	clearStorage()
-	service := Service()
+	service := TestService()
 
 	created, _ := service.CreatePlayer("aname")
 

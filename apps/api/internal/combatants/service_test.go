@@ -5,7 +5,6 @@ import (
 )
 
 func TestService_New(t *testing.T) {
-	clearStorage()
 	service := Service()
 
 	if service == nil {
@@ -18,8 +17,7 @@ func TestService_New(t *testing.T) {
 }
 
 func TestService_Fight(t *testing.T) {
-	clearStorage()
-	service := Service()
+	service := TestService()
 
 	combatants := service.GenerateCombatants(2)
 
@@ -31,8 +29,7 @@ func TestService_Fight(t *testing.T) {
 }
 
 func TestService_LoadCombatant(t *testing.T) {
-	clearStorage()
-	service := Service()
+	service := TestService()
 
 	c := service.GenerateCombatants(1)[0]
 	loaded := service.GetCombatant(c.Id)

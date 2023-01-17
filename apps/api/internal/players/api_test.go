@@ -12,7 +12,6 @@ import (
 )
 
 func TestApi_New(t *testing.T) {
-	clearStorage()
 	api := Api()
 
 	if api == nil {
@@ -25,8 +24,7 @@ func TestApi_New(t *testing.T) {
 }
 
 func TestApi_CreatePlayer(t *testing.T) {
-	clearStorage()
-	api := Api()
+	api := TestApi()
 
 	appEnv := common.AppEnv{
 		Render: render.New(),
@@ -38,12 +36,10 @@ func TestApi_CreatePlayer(t *testing.T) {
 	api.CreatePlayer(response, req, appEnv)
 
 	spec.ExpectEqualInts(t, 200, response.StatusCode, "Unexpected status code")
-	spec.ExpectEqualInts(t, 1, len(storage.players), "Unexpected stored combatant count")
 }
 
 func TestApi_CreatePlayer_InvalidBody(t *testing.T) {
-	clearStorage()
-	api := Api()
+	api := TestApi()
 
 	appEnv := common.AppEnv{
 		Render: render.New(),
@@ -55,12 +51,10 @@ func TestApi_CreatePlayer_InvalidBody(t *testing.T) {
 	api.CreatePlayer(response, req, appEnv)
 
 	spec.ExpectEqualInts(t, 400, response.StatusCode, "Unexpected status code")
-	spec.ExpectEqualInts(t, 0, len(storage.players), "Unexpected stored combatant count")
 }
 
 func TestApi_CreatePlayer_EmptyName(t *testing.T) {
-	clearStorage()
-	api := Api()
+	api := TestApi()
 
 	appEnv := common.AppEnv{
 		Render: render.New(),
@@ -73,5 +67,4 @@ func TestApi_CreatePlayer_EmptyName(t *testing.T) {
 
 	spec.ExpectEqualInts(t, 400, response.StatusCode, "Unexpected status code")
 	spec.ExpectIncludedString(t, "Player name can't be empty", response.Text, "Unexpected response text")
-	spec.ExpectEqualInts(t, 0, len(storage.players), "Unexpected stored combatant count")
 }

@@ -9,11 +9,14 @@ func Api() *api {
 	return newApi(newApplication(storage, r))
 }
 
+func TestApi() *api {
+	return newApi(newApplication(newLocalStorage(r), r))
+}
+
 func Service() *service {
 	return newService(newApplication(storage, r))
 }
 
-// testing only
-func clearStorage() {
-	storage = newLocalStorage(r)
+func TestService() *service {
+	return newService(newApplication(newLocalStorage(r), r))
 }

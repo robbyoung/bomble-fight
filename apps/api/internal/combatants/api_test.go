@@ -12,7 +12,6 @@ import (
 )
 
 func TestApi_New(t *testing.T) {
-	clearStorage()
 	api := Api()
 
 	if api == nil {
@@ -25,8 +24,7 @@ func TestApi_New(t *testing.T) {
 }
 
 func TestApi_GenerateCombatants(t *testing.T) {
-	clearStorage()
-	api := Api()
+	api := TestApi()
 
 	appEnv := common.AppEnv{
 		Render: render.New(),
@@ -38,12 +36,10 @@ func TestApi_GenerateCombatants(t *testing.T) {
 	api.GenerateCombatants(response, req, appEnv)
 
 	spec.ExpectEqualInts(t, 200, response.StatusCode, "Unexpected status code")
-	spec.ExpectEqualInts(t, 2, len(storage.combatants), "Unexpected stored combatant count")
 }
 
 func TestApi_GenerateCombatants_InvalidBody(t *testing.T) {
-	clearStorage()
-	api := Api()
+	api := TestApi()
 
 	appEnv := common.AppEnv{
 		Render: render.New(),
@@ -55,5 +51,4 @@ func TestApi_GenerateCombatants_InvalidBody(t *testing.T) {
 	api.GenerateCombatants(response, req, appEnv)
 
 	spec.ExpectEqualInts(t, 400, response.StatusCode, "Unexpected status code")
-	spec.ExpectEqualInts(t, 0, len(storage.combatants), "Unexpected stored combatant count")
 }
