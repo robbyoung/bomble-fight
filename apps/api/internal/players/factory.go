@@ -2,18 +2,18 @@ package players
 
 var storage = newLocalStorage()
 
-func Api() *api {
+func Api() IPlayerApi {
 	return newApi(newApplication(storage))
 }
 
-func TestApi() *api {
+func TestApi() IPlayerApi {
 	return newApi(newApplication(newLocalStorage()))
 }
 
-func Service() *service {
-	return newService(newApplication(storage))
+func Service() IPlayerService {
+	return newApplication(storage)
 }
 
-func TestService() *service {
-	return newService(newApplication(newLocalStorage()))
+func TestService() IPlayerService {
+	return newApplication(newLocalStorage())
 }

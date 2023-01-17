@@ -17,10 +17,6 @@ func TestApi_New(t *testing.T) {
 	if api == nil {
 		t.Fatalf("Api() returned nil")
 	}
-
-	if api.application == nil {
-		t.Fatalf("Api object has no application")
-	}
 }
 
 func TestApi_GenerateCombatants(t *testing.T) {

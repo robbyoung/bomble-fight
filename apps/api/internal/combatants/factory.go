@@ -5,18 +5,18 @@ import "bomble-fight/internal/common"
 var r = common.NewRandom()
 var storage = newLocalStorage(r)
 
-func Api() *api {
+func Api() ICombatantApi {
 	return newApi(newApplication(storage, r))
 }
 
-func TestApi() *api {
+func TestApi() ICombatantApi {
 	return newApi(newApplication(newLocalStorage(r), r))
 }
 
-func Service() *service {
-	return newService(newApplication(storage, r))
+func Service() ICombatantService {
+	return newApplication(storage, r)
 }
 
-func TestService() *service {
-	return newService(newApplication(newLocalStorage(r), r))
+func TestService() ICombatantService {
+	return newApplication(newLocalStorage(r), r)
 }
