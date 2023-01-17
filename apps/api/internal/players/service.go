@@ -17,3 +17,7 @@ func (s *service) CreatePlayer(name string) (*Player, error) {
 func (s *service) GetPlayer(id string) *Player {
 	return s.application.GetPlayer(id)
 }
+
+func (s *service) SpendMoney(id string, amount int) error {
+	return s.application.SpendMoney(id, amount)
+}

@@ -31,6 +31,16 @@ func (app *application) GetPlayer(id string) *Player {
 	return nil
 }
 
+func (app *application) SpendMoney(id string, amount int) error {
+	player := app.storage.LoadPlayer(id)
+
+	err := player.SpendMoney(amount)
+
+	app.storage.SavePlayer(player)
+
+	return err
+}
+
 func convertToPlayerModel(p *aggregate) *Player {
 	return p.toPersistence()
 }

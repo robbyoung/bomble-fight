@@ -73,3 +73,20 @@ func TestApplication_GetPlayer_Nonexistent(t *testing.T) {
 		t.Fatalf("Unexpected player reference from GetPlayer()")
 	}
 }
+
+func TestApplication_SpendMoney(t *testing.T) {
+	storage := newLocalStorage()
+	app := newApplication(storage)
+
+	p, _ := app.CreatePlayer("aplayername")
+
+	err := app.SpendMoney(p.Id, 10)
+
+	if err != nil {
+		t.Fatal("Unexpected error from SpendMoney()")
+	}
+
+	loaded := app.GetPlayer(p.Id)
+
+	spec.ExpectEqualInts(t, 90, loaded.Money, "Unexpected money value in stored player")
+}

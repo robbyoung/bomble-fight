@@ -35,3 +35,36 @@ func TestAggregate_Persistence(t *testing.T) {
 	spec.ExpectEqualStrings(t, orig.Name, loaded.Name, "Original and loaded names do not match")
 	spec.ExpectEqualInts(t, orig.Money, loaded.Money, "Original and loaded money do not match")
 }
+
+func TestAggregate_SpendMoney(t *testing.T) {
+	agg := newAggregate("aname")
+
+	err := agg.SpendMoney(30)
+	spec.ExpectEqualInts(t, 70, agg.Money, "Unexpected money value")
+
+	if err != nil {
+		t.Error("Unexpected error from SpendMoney()")
+	}
+}
+
+func TestAggregate_SpendMoney_TooMuch(t *testing.T) {
+	agg := newAggregate("aname")
+
+	err := agg.SpendMoney(110)
+	spec.ExpectEqualInts(t, 100, agg.Money, "Unexpected money value")
+
+	if err == nil {
+		t.Error("Expected error from SpendMoney(), received none")
+	}
+}
+
+func TestAggregate_SpendMoney_Negative(t *testing.T) {
+	agg := newAggregate("aname")
+
+	err := agg.SpendMoney(-30)
+	spec.ExpectEqualInts(t, 100, agg.Money, "Unexpected money value")
+
+	if err == nil {
+		t.Error("Expected error from SpendMoney(), received none")
+	}
+}
