@@ -1,11 +1,14 @@
 package combatants
 
 type ICombatantService interface {
+	GenerateCombatants(int) []*Combatant
+	GetCombatant(string) *Combatant
 	Fight(string, string) (*Action, *Action)
 }
 
 type ICombatantApplication interface {
 	GenerateCombatants(int) []*Combatant
+	GetCombatant(string) *Combatant
 	Fight(string, string) (*Action, *Action)
 }
 

@@ -21,11 +21,23 @@ func TestService_Fight(t *testing.T) {
 	clearStorage()
 	service := Service()
 
-	combatants := service.application.GenerateCombatants(2)
+	combatants := service.GenerateCombatants(2)
 
 	a1, a2 := service.Fight(combatants[0].Id, combatants[1].Id)
 
 	if a1 == nil || a2 == nil {
 		t.Fatalf("One or both of the combatant actions was nil")
+	}
+}
+
+func TestService_LoadCombatant(t *testing.T) {
+	clearStorage()
+	service := Service()
+
+	c := service.GenerateCombatants(1)[0]
+	loaded := service.GetCombatant(c.Id)
+
+	if loaded == nil {
+		t.Fatalf("LoadCombatant() returned nil unexpectedly")
 	}
 }

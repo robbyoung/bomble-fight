@@ -23,6 +23,16 @@ func (app *application) GenerateCombatants(count int) []*Combatant {
 	return results
 }
 
+func (app *application) GetCombatant(id string) *Combatant {
+	loaded := app.storage.LoadCombatant(id)
+
+	if loaded != nil {
+		return convertToCombatantModel(loaded)
+	}
+
+	return nil
+}
+
 func (app *application) Fight(id1 string, id2 string) (*Action, *Action) {
 	c1 := app.storage.LoadCombatant(id1)
 	c2 := app.storage.LoadCombatant(id2)

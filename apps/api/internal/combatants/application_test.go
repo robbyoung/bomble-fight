@@ -62,3 +62,37 @@ func TestApplication_Fight(t *testing.T) {
 
 	spec.ExpectEqualInts(t, 40, c2.CurrentHealth, "Unexpected combatant 2 health")
 }
+
+func TestApplication_GetCombatant(t *testing.T) {
+	r := spec.NewMockRandom([]int{4})
+	storage := newLocalStorage(r)
+
+	app := newApplication(storage, r)
+
+	original := app.GenerateCombatants(1)[0]
+	loaded := app.GetCombatant(original.Id)
+
+	if loaded == nil {
+		t.Error("GetCombatant returned nil unexpectedly")
+		return
+	}
+
+	if original == loaded {
+		t.Error("Original and loaded combatant have the same reference")
+	}
+
+	spec.ExpectEqualStrings(t, original.Name, loaded.Name, "Loaded combatant has a different name")
+}
+
+func TestApplication_GetCombatant_NotFound(t *testing.T) {
+	r := spec.NewMockRandom([]int{4})
+	storage := newLocalStorage(r)
+
+	app := newApplication(storage, r)
+
+	loaded := app.GetCombatant("aninvalidid")
+
+	if loaded != nil {
+		t.Error("Expected nil from GetCombatant()")
+	}
+}

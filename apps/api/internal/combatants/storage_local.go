@@ -15,7 +15,13 @@ func newLocalStorage(r common.IRandom) *localStorage {
 }
 
 func (storage *localStorage) LoadCombatant(id string) *aggregate {
-	return fromPersistence(storage.combatants[id], storage.r)
+	c, ok := storage.combatants[id]
+
+	if ok {
+		return fromPersistence(c, storage.r)
+	}
+
+	return nil
 }
 
 func (storage *localStorage) SaveCombatant(combatant *aggregate) {
