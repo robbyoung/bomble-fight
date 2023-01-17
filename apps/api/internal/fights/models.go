@@ -16,3 +16,5 @@ type persistedModel struct {
 	CombatantIds []string
 	Status       FightStatusCode
 }
+
+type Fight = persistedModel

@@ -1,6 +1,6 @@
 package fights
 
 type IFightStorage interface {
-	LoadPlayer(string) *aggregate
-	SavePlayer(*aggregate)
+	LoadFight(string) *aggregate
+	SaveFight(*aggregate)
 }

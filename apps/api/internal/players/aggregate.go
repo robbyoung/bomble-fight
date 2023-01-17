@@ -22,11 +22,11 @@ func newAggregate(name string) *aggregate {
 
 func (player *aggregate) SpendMoney(amount int) error {
 	if amount < 0 {
-		return errors.New("Can't spend a negative amount of money")
+		return errors.New("can't spend a negative amount of money")
 	}
 
 	if player.Money < amount {
-		return errors.New("Player doensn't have enough money to spend")
+		return errors.New("player doensn't have enough money to spend")
 	}
 
 	player.Money -= amount
