@@ -33,6 +33,15 @@ func (player *aggregate) SpendMoney(amount int) error {
 	return nil
 }
 
+func (player *aggregate) EarnMoney(amount int) error {
+	if amount < 0 {
+		return errors.New("can't earn a negative amount of money")
+	}
+
+	player.Money += amount
+	return nil
+}
+
 func fromPersistence(model *persistedModel) *aggregate {
 	return &aggregate{
 		Id:    model.Id,

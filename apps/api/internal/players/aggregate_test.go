@@ -68,3 +68,25 @@ func TestAggregate_SpendMoney_Negative(t *testing.T) {
 		t.Error("Expected error from SpendMoney(), received none")
 	}
 }
+
+func TestAggregate_EarnMoney(t *testing.T) {
+	agg := newAggregate("aname")
+
+	err := agg.EarnMoney(30)
+	spec.ExpectEqualInts(t, 130, agg.Money, "Unexpected money value")
+
+	if err != nil {
+		t.Error("Unexpected error from EarnMoney()")
+	}
+}
+
+func TestAggregate_EarnMoney_Negative(t *testing.T) {
+	agg := newAggregate("aname")
+
+	err := agg.EarnMoney(-30)
+	spec.ExpectEqualInts(t, 100, agg.Money, "Unexpected money value")
+
+	if err == nil {
+		t.Error("Expected error from EarnMoney(), received none")
+	}
+}

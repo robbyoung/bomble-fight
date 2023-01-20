@@ -80,13 +80,30 @@ func TestApplication_SpendMoney(t *testing.T) {
 
 	p, _ := app.CreatePlayer("aplayername")
 
-	err := app.SpendMoney(p.Id, 10)
+	err := app.ChargePlayer(p.Id, 10)
 
 	if err != nil {
-		t.Fatal("Unexpected error from SpendMoney()")
+		t.Fatal("Unexpected error from ChargePlayer()")
 	}
 
 	loaded := app.GetPlayer(p.Id)
 
 	spec.ExpectEqualInts(t, 90, loaded.Money, "Unexpected money value in stored player")
+}
+
+func TestApplication_EarnMoney(t *testing.T) {
+	storage := newLocalStorage()
+	app := newApplication(storage)
+
+	p, _ := app.CreatePlayer("aplayername")
+
+	err := app.PayoutPlayer(p.Id, 10)
+
+	if err != nil {
+		t.Fatal("Unexpected error from PayoutPlayer()")
+	}
+
+	loaded := app.GetPlayer(p.Id)
+
+	spec.ExpectEqualInts(t, 110, loaded.Money, "Unexpected money value in stored player")
 }

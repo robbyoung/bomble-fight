@@ -42,7 +42,7 @@ func (a *application) AddBet(fid string, pid string, cid string, amount int) err
 		return err
 	}
 
-	a.players.SpendMoney(pid, amount)
+	a.players.ChargePlayer(pid, amount)
 
 	return nil
 }
