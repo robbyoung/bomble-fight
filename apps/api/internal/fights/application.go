@@ -50,3 +50,21 @@ func (a *application) AddBet(fid string, pid string, cid string, amount int) err
 func convertToFightModel(a *aggregate) *Fight {
 	return a.toPersistence()
 }
+
+func (a *application) PayoutFans(fid string, cid string) error {
+	f := a.storage.LoadFight(fid)
+	if f == nil {
+		return errors.New("no fight found with specified ID")
+	}
+
+	bets, err := f.GetBetsForCombatant(cid)
+	if err != nil {
+		return err
+	}
+
+	for _, b := range bets {
+		a.players.PayoutPlayer(b.PlayerId, b.Amount)
+	}
+
+	return nil
+}

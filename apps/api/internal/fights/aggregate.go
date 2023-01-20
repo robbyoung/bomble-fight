@@ -84,6 +84,21 @@ func (agg *aggregate) ContainsCombatant(id string) bool {
 	return false
 }
 
+func (agg *aggregate) GetBetsForCombatant(cid string) ([]bet, error) {
+	if !agg.ContainsCombatant(cid) {
+		return nil, errors.New("no record of specified combatant")
+	}
+
+	bets := make([]bet, 0)
+	for _, b := range agg.bets {
+		if b.CombatantId == cid {
+			bets = append(bets, *b)
+		}
+	}
+
+	return bets, nil
+}
+
 func (agg *aggregate) toPersistence() *persistedModel {
 	return &persistedModel{
 		Id:           agg.id,
