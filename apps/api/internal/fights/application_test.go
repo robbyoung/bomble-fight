@@ -128,3 +128,24 @@ func TestApplication_AddBet_DoubleUp(t *testing.T) {
 	}
 	spec.ExpectEqualInts(t, 1, len(storage.fights[f.Id].Bets), "Unexpected bet count")
 }
+
+func TestApplication_PayoutFans(t *testing.T) {
+	storage := newLocalStorage()
+	ps := players.Service()
+	cs := combatants.Service()
+	app := newApplication(storage, cs, ps)
+
+	c := cs.GenerateCombatants(1)[0]
+	p, _ := ps.CreatePlayer("aname")
+
+	f := app.CreateFight([]string{p.Id}, []string{c.Id})
+	app.AddBet(f.Id, p.Id, c.Id, 50)
+
+	err := app.PayoutFans(f.Id, c.Id)
+	p = ps.GetPlayer(p.Id)
+
+	if err != nil {
+		t.Fatal("Unexpected error from PayoutFans()")
+	}
+	spec.ExpectEqualInts(t, 150, p.Money, "Unexpected money amount")
+}

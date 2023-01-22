@@ -63,7 +63,7 @@ func (a *application) PayoutFans(fid string, cid string) error {
 	}
 
 	for _, b := range bets {
-		a.players.PayoutPlayer(b.PlayerId, b.Amount)
+		a.players.PayoutPlayer(b.PlayerId, b.Amount*2)
 	}
 
 	return nil
