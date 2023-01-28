@@ -68,3 +68,33 @@ func (a *application) PayoutFans(fid string, cid string) error {
 
 	return nil
 }
+
+func (a *application) ResolveFight(fid string) ([]*c.Action, error) {
+	f := a.storage.LoadFight(fid)
+	if f == nil {
+		return nil, errors.New("no fight found with specified ID")
+	}
+
+	if f.status == Pending {
+		return nil, errors.New("fight isn't ready to start yet")
+	}
+
+	if f.status == Finished {
+		return nil, errors.New("fight is already over")
+	}
+
+	c1, c2, _ := f.GetCombatantIds()
+	actions := make([]*c.Action, 0)
+	for {
+		a1, a2 := a.combatants.Fight(c1, c2)
+		actions = append(actions, a1, a2)
+
+		if len(actions) > 1000 {
+			return nil, errors.New("fight didn't resolve after 1000 steps")
+		}
+
+		if a1.Code == c.Killed || a2.Code == c.Killed {
+			return actions, nil
+		}
+	}
+}

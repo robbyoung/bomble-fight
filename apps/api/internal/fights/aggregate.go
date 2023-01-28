@@ -65,6 +65,14 @@ func (agg *aggregate) GetBet(playerId string) bet {
 	return *agg.bets[playerId]
 }
 
+func (agg *aggregate) GetCombatantIds() (string, string, error) {
+	if len(agg.combatantIds) != 2 {
+		return "", "", errors.New("fight contains an unexpected number of combatant ids")
+	}
+
+	return agg.combatantIds[0], agg.combatantIds[1], nil
+}
+
 func (agg *aggregate) ContainsBet(playerId string) bool {
 	_, exists := agg.bets[playerId]
 	return exists

@@ -4,9 +4,8 @@ type FightStatusCode int
 
 const (
 	Pending  FightStatusCode = 0
-	Starting FightStatusCode = 1
-	Active   FightStatusCode = 2
-	Finished FightStatusCode = 3
+	Active   FightStatusCode = 1
+	Finished FightStatusCode = 2
 )
 
 type persistedModel struct {

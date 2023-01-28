@@ -164,3 +164,30 @@ func TestAggregate_GetBetsForCombatant_InvalidCombatant(t *testing.T) {
 		t.Fatal("Expected no bets array to be returned")
 	}
 }
+
+func TestAggregate_GetCombatantIds(t *testing.T) {
+	players := []string{"aplayerid", "anotherplayerid"}
+	combatants := []string{"acombatantid", "anothercombatantid"}
+	agg := newAggregate(players, combatants)
+
+	c1, c2, err := agg.GetCombatantIds()
+
+	if err != nil {
+		t.Fatal("Received an unexpected error from GetCombatantIds()")
+	}
+
+	spec.ExpectEqualStrings(t, "acombatantid", c1, "Combatant 1 id mismatch")
+	spec.ExpectEqualStrings(t, "anothercombatantid", c2, "Combatant 2 id mismatch")
+}
+
+func TestAggregate_GetCombatantIds_InvalidNumber(t *testing.T) {
+	players := []string{"aplayerid", "anotherplayerid"}
+	combatants := []string{"acombatantid", "anothercombatantid", "athirdcombatantid"}
+	agg := newAggregate(players, combatants)
+
+	_, _, err := agg.GetCombatantIds()
+
+	if err == nil {
+		t.Fatal("Expected an error from GetCombatantIds() but received none")
+	}
+}
