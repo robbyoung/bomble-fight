@@ -58,6 +58,10 @@ func (agg *aggregate) AddBet(playerId string, combatantId string, amount int) er
 		Amount:      amount,
 	}
 	agg.bets[playerId] = b
+
+	agg.players[playerId] = true
+	agg.readyCheck()
+
 	return nil
 }
 
@@ -105,6 +109,16 @@ func (agg *aggregate) GetBetsForCombatant(cid string) ([]bet, error) {
 	}
 
 	return bets, nil
+}
+
+func (agg *aggregate) readyCheck() {
+	for _, ready := range agg.players {
+		if !ready {
+			return
+		}
+	}
+
+	agg.status = Ready
 }
 
 func (agg *aggregate) toPersistence() *persistedModel {

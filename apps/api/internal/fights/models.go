@@ -4,7 +4,7 @@ type FightStatusCode int
 
 const (
 	Pending  FightStatusCode = 0
-	Active   FightStatusCode = 1
+	Ready    FightStatusCode = 1
 	Finished FightStatusCode = 2
 )
 

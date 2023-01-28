@@ -34,6 +34,18 @@ func TestAggregate_AddBet(t *testing.T) {
 	spec.ExpectEqualStrings(t, "aplayerid", bet.PlayerId, "Unexpected player id in bet")
 	spec.ExpectEqualStrings(t, "acombatantid", bet.CombatantId, "Unexpected combatant id in bet")
 	spec.ExpectEqualInts(t, 10, bet.Amount, "Unexpected amount in bet")
+	spec.ExpectEqualInts(t, int(Pending), int(agg.status), "Unexpected fight status code")
+}
+
+func TestAggregate_AddBet_SetReady(t *testing.T) {
+	players := []string{"aplayerid", "anotherplayerid"}
+	combatants := []string{"acombatantid", "anothercombatantid"}
+	agg := newAggregate(players, combatants)
+
+	agg.AddBet("aplayerid", "acombatantid", 10)
+	agg.AddBet("anotherplayerid", "acombatantid", 20)
+
+	spec.ExpectEqualInts(t, int(Ready), int(agg.status), "Unexpected fight status code")
 }
 
 func TestAggregate_AddBet_InvalidPlayerId(t *testing.T) {
