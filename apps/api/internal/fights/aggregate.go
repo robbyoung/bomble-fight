@@ -57,8 +57,8 @@ func (agg *aggregate) AddBet(playerId string, combatantId string, amount int) er
 		CombatantId: combatantId,
 		Amount:      amount,
 	}
-	agg.bets[playerId] = b
 
+	agg.bets[playerId] = b
 	agg.players[playerId] = true
 	agg.readyCheck()
 
@@ -127,6 +127,7 @@ func (agg *aggregate) toPersistence() *persistedModel {
 		Bets:         agg.bets,
 		Players:      agg.players,
 		CombatantIds: agg.combatantIds,
+		Status:       agg.status,
 	}
 }
 
@@ -136,5 +137,6 @@ func fromPersistence(model *persistedModel) *aggregate {
 		bets:         model.Bets,
 		players:      model.Players,
 		combatantIds: model.CombatantIds,
+		status:       model.Status,
 	}
 }

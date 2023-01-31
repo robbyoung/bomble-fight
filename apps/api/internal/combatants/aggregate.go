@@ -45,11 +45,11 @@ func newAggregate(r common.IRandom) *aggregate {
 		CurrentHealth: 50,
 		Streak:        0,
 
-		Ferocity:  r.RandInt(0, 10),
-		Endurance: r.RandInt(0, 10),
-		Skill:     r.RandInt(0, 10),
-		Agility:   r.RandInt(0, 10),
-		Speed:     r.RandInt(0, 10),
+		Ferocity:  r.RandInt(1, 11),
+		Endurance: r.RandInt(1, 11),
+		Skill:     r.RandInt(1, 11),
+		Agility:   r.RandInt(1, 11),
+		Speed:     r.RandInt(1, 11),
 	}
 }
 

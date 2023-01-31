@@ -44,6 +44,8 @@ func (a *application) AddBet(fid string, pid string, cid string, amount int) err
 
 	a.players.ChargePlayer(pid, amount)
 
+	a.storage.SaveFight(f)
+
 	return nil
 }
 
@@ -65,6 +67,8 @@ func (a *application) PayoutFans(fid string, cid string) error {
 	for _, b := range bets {
 		a.players.PayoutPlayer(b.PlayerId, b.Amount*2)
 	}
+
+	a.storage.SaveFight(f)
 
 	return nil
 }
@@ -94,6 +98,8 @@ func (a *application) ResolveFight(fid string) ([]*c.Action, error) {
 		}
 
 		if a1.Code == c.Killed || a2.Code == c.Killed {
+			f.status = Finished
+			a.storage.SaveFight(f)
 			return actions, nil
 		}
 	}
